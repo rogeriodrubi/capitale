@@ -1,4 +1,5 @@
-import { Building2, Award, Users, TrendingUp } from "lucide-react";
+import { Building2, Award, TrendingUp } from "lucide-react";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -127,10 +128,11 @@ export function About() {
               <Card key={member.name}>
                 <CardHeader>
                   <div className="w-full h-48 relative mb-4 rounded-lg overflow-hidden bg-neutral-100">
-                    <img
+                    <Image
                       src={member.image}
                       alt={member.name}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   </div>
                   <CardTitle>{member.name}</CardTitle>
