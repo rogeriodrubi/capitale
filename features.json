@@ -1,0 +1,393 @@
+{
+  "features": [
+    {
+      "id": "feature-001",
+      "name": "Hero Section com CTA",
+      "category": "functional",
+      "description": "Seção de boas-vindas com banner atrativo, subtítulo descritivo e botão call-to-action principal",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Acessar homepage",
+        "Visualizar banner com imagem de fundo",
+        "Ler título e subtítulo da Capitale",
+        "Clicar em 'Explorar Terrenos'",
+        "Fazer scroll suave até seção de terrenos"
+      ],
+      "acceptance_criteria": [
+        "Banner ocupa 100% da viewport height",
+        "Texto é legível em todos os dispositivos",
+        "CTA button tem hover effect",
+        "Scroll é suave e natural"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-002",
+      "name": "Exibição de Mapa Interativo de Terrenos",
+      "category": "functional",
+      "description": "Seção que exibe uma imagem com mapa de terrenos clicáveis, permitindo visualizar múltiplas propriedades",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Navegar até seção 'Terrenos'",
+        "Visualizar mapa com múltiplos terrenos identificados",
+        "Passar mouse sobre um terreno (hover)",
+        "Observar efeito visual de destaque",
+        "Clicar em um terreno"
+      ],
+      "acceptance_criteria": [
+        "Mapa é responsivo e se adapta a diferentes tamanhos",
+        "Cada terreno tem área clicável bem definida",
+        "Hover effect indica interatividade",
+        "Cursor muda para pointer ao passar em terreno",
+        "Sem lag ou atraso ao interagir"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-003",
+      "name": "Modal de Detalhes do Terreno",
+      "category": "functional",
+      "description": "Modal/drawer que exibe informações completas de um terreno específico após clique",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Clicar em um terreno no mapa",
+        "Modal abre com animação suave",
+        "Visualizar todas as informações do terreno",
+        "Fazer scroll no modal se necessário",
+        "Visualizar galeria de imagens com carrossel",
+        "Fechar modal clicando em X ou fora do modal"
+      ],
+      "acceptance_criteria": [
+        "Modal abre com transição suave",
+        "Exibe localização, metragem, preço e tipo",
+        "Galeriacom imagens em carrossel funciona",
+        "Modal é responsivo em mobile",
+        "Botão CTA 'Solicitar Informações' está visível",
+        "Modal fecha sem erros"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-004",
+      "name": "Grade de Propriedades",
+      "category": "functional",
+      "description": "Exibição em grid/cards de todas as propriedades com opções de filtro e busca",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Acessar seção 'Todas as Propriedades'",
+        "Visualizar cards em grid responsivo",
+        "Usar filtros de tipo, preço e localização",
+        "Realizar busca por palavra-chave",
+        "Clicar em um card de propriedade",
+        "Ver detalhes da propriedade"
+      ],
+      "acceptance_criteria": [
+        "Cards são exibidos em grid responsivo (1-4 colunas)",
+        "Filtros funcionam em tempo real",
+        "Busca filtra propriedades corretamente",
+        "Cards têm hover effect",
+        "Informações essenciais aparecem no card",
+        "Paginação funciona se houver muitas propriedades"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-005",
+      "name": "Seção Sobre a Empresa",
+      "category": "content",
+      "description": "Página com informações sobre a Capitale, missão, visão, valores e equipe",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Acessar seção 'Sobre'",
+        "Ler história da empresa",
+        "Visualizar missão, visão e valores",
+        "Ver estatísticas de vendas e clientes",
+        "Visualizar fotos da equipe",
+        "Ler bios dos membros da equipe"
+      ],
+      "acceptance_criteria": [
+        "Página carrega rápido",
+        "Conteúdo é bem organizado e legível",
+        "Fotos da equipe são responsivas",
+        "Informações estão precisas e atualizadas",
+        "Design segue o padrão da aplicação"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-006",
+      "name": "Seção de Serviços",
+      "category": "content",
+      "description": "Página descrevendo os serviços oferecidos pela imobiliária Capitale",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Acessar seção 'Serviços'",
+        "Visualizar cards de cada serviço",
+        "Ler descrição de consultoria imobiliária",
+        "Ler sobre gestão de propriedades",
+        "Ler sobre investimento seguro",
+        "Ler sobre documentação e legalização"
+      ],
+      "acceptance_criteria": [
+        "4 serviços principais são apresentados",
+        "Cards têm ícones visuais distintivos",
+        "Descrições são claras e concisas",
+        "Cards são responsivos",
+        "Design é atrativo e profissional"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-007",
+      "name": "Formulário de Contato",
+      "category": "functional",
+      "description": "Formulário funcional para coleta de leads com validação em tempo real",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Acessar seção 'Contato' ou clicar CTA em modal",
+        "Preencher campo 'Nome'",
+        "Preencher campo 'Email'",
+        "Preencher campo 'Telefone'",
+        "Preencher campo 'Mensagem'",
+        "Clicar botão 'Enviar'",
+        "Ver mensagem de sucesso"
+      ],
+      "acceptance_criteria": [
+        "Validação em tempo real funciona",
+        "Email é validado corretamente",
+        "Telefone aceita números válidos",
+        "Formulário não envia se há erros",
+        "Mensagem de sucesso é exibida",
+        "Formulário é responsivo em mobile",
+        "Sem sensibilidade a maiúsculas/minúsculas"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-008",
+      "name": "Footer Completo",
+      "category": "ui",
+      "description": "Footer com links de navegação, sociais, contato e newsletter",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Fazer scroll até final da página",
+        "Visualizar footer",
+        "Clicar em links de navegação",
+        "Clicar em ícones de redes sociais",
+        "Ver informações de contato",
+        "Se houver, inscrever-se na newsletter"
+      ],
+      "acceptance_criteria": [
+        "Footer é sticky ou aparece ao final",
+        "Links funcionam corretamente",
+        "Ícones sociais abrem em nova aba",
+        "Email de contato é clickável",
+        "Footer é responsivo",
+        "Design mantém consistência visual"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-009",
+      "name": "Responsividade Mobile",
+      "category": "non-functional",
+      "description": "Garantir que todo o site funciona perfeitamente em dispositivos móveis",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Testar site em iPhone (375px)",
+        "Testar em Android (375px)",
+        "Testar em tablet (768px)",
+        "Verificar todos os componentes",
+        "Testar navegação móvel",
+        "Testar formulários em mobile",
+        "Testar cliques em áreas interativas"
+      ],
+      "acceptance_criteria": [
+        "Nenhuma scrollbar horizontal",
+        "Textos são legíveis sem zoom",
+        "Botões têm pelo menos 44px de altura",
+        "Imagens se adaptam ao tamanho",
+        "Menu é acessível em mobile",
+        "Modais funcionam em mobile",
+        "Performance é aceitável em 4G"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-010",
+      "name": "Performance e Otimização",
+      "category": "non-functional",
+      "description": "Otimizar performance, tempo de carregamento e score do Lighthouse",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Rodar Lighthouse",
+        "Verificar métricas Core Web Vitals",
+        "Verificar LCP (Largest Contentful Paint)",
+        "Verificar FID (First Input Delay)",
+        "Verificar CLS (Cumulative Layout Shift)",
+        "Otimizar imagens e assets",
+        "Implementar lazy loading"
+      ],
+      "acceptance_criteria": [
+        "Lighthouse score > 90",
+        "LCP < 2.5s",
+        "FID < 100ms",
+        "CLS < 0.1",
+        "Tempo total de carregamento < 2s",
+        "Build time < 60s",
+        "Bundle size otimizado"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-011",
+      "name": "Navegação e Header",
+      "category": "ui",
+      "description": "Header com navegação principal, logo e menu responsivo",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Visualizar header no topo da página",
+        "Ver logo da Capitale",
+        "Clicar em links de navegação (Home, Terrenos, Sobre, Contato)",
+        "Testar em mobile",
+        "Abrir menu hamburger em mobile",
+        "Fechar menu clicando em item"
+      ],
+      "acceptance_criteria": [
+        "Header é sticky ou aparece fixo",
+        "Logo leva a homepage ao clicar",
+        "Links de navegação funcionam",
+        "Menu mobile aparece em telas pequenas",
+        "Menu hamburger funciona corretamente",
+        "Header é responsivo",
+        "Design é profissional e alinhado com a marca"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-012",
+      "name": "Galeria de Imagens do Terreno",
+      "category": "functional",
+      "description": "Carrossel/galeria de imagens dentro do modal de detalhes do terreno",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Abrir modal de um terreno",
+        "Visualizar imagem principal",
+        "Clicar seta direita para próxima imagem",
+        "Clicar seta esquerda para imagem anterior",
+        "Clicar em thumbnail para ir direto à imagem",
+        "Verificar indicadores de página"
+      ],
+      "acceptance_criteria": [
+        "Imagens carregam rapidamente",
+        "Navegação entre imagens é suave",
+        "Thumbnails mostram preview",
+        "Indicadores mostram posição atual",
+        "Funciona em touch (swipe) em mobile",
+        "Sem erros ao carregar imagens"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-013",
+      "name": "Design System e Temas",
+      "category": "ui",
+      "description": "Implementar design system com Tailwind + shadcn/ui com tema Cyan",
+      "priority": "high",
+      "status": "pending",
+      "steps": [
+        "Verificar cores do tema (Cyan, Neutral)",
+        "Verificar tipografia (Inter)",
+        "Verificar espaçamento consistente",
+        "Verificar componentes shadcn/ui",
+        "Testar contraste de cores (acessibilidade)",
+        "Verificar estados (hover, focus, active)"
+      ],
+      "acceptance_criteria": [
+        "Cores seguem palheta definida",
+        "Tipografia usa Inter corretamente",
+        "Espaçamento é consistente",
+        "Componentes shadcn/ui funcionam",
+        "Contraste atende WCAG AA",
+        "Estados visuais são claros",
+        "Design é cohesivo em todo o site"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-014",
+      "name": "Acessibilidade",
+      "category": "non-functional",
+      "description": "Garantir que o site atende aos padrões WCAG 2.1 AA de acessibilidade",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Testar navegação por teclado",
+        "Testar com leitor de tela",
+        "Verificar contraste de cores",
+        "Verificar alt text em imagens",
+        "Verificar labels em formulários",
+        "Rodar ferramenta de acessibilidade"
+      ],
+      "acceptance_criteria": [
+        "Site é navegável por teclado",
+        "Focado visual é claro",
+        "Alt text em todas as imagens",
+        "Labels associados a inputs",
+        "Estrutura semântica correta",
+        "Contrastes atendem WCAG AA",
+        "Sem erros em ferramentas de acessibilidade"
+      ],
+      "passes": false
+    },
+    {
+      "id": "feature-015",
+      "name": "SEO Optimization",
+      "category": "non-functional",
+      "description": "Otimizar site para mecanismos de busca (SEO)",
+      "priority": "medium",
+      "status": "pending",
+      "steps": [
+        "Adicionar meta tags apropriadas",
+        "Verificar estrutura de heading",
+        "Adicionar schema.org markup",
+        "Criar sitemap.xml",
+        "Verificar robots.txt",
+        "Rodar ferramentas de SEO"
+      ],
+      "acceptance_criteria": [
+        "Meta titles e descriptions apropriadas",
+        "Headings em ordem hierárquica",
+        "Schema markup para local business",
+        "Sitemap.xml gerado",
+        "robots.txt configurado",
+        "URLs amigáveis",
+        "Open Graph tags presentes"
+      ],
+      "passes": false
+    }
+  ],
+  "summary": {
+    "total_features": 15,
+    "high_priority": 7,
+    "medium_priority": 5,
+    "low_priority": 0,
+    "functional": 9,
+    "non_functional": 4,
+    "ui": 2,
+    "content": 1,
+    "estimated_timeline_weeks": 4
+  }
+}
