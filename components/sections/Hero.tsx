@@ -23,7 +23,7 @@ export function Hero() {
         </h1>
 
         <p className="text-xl sm:text-2xl text-cyan-50 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Descubra as melhores oportunidades imobiliárias de São Paulo.
+          Descubra as melhores oportunidades imobiliárias de Petrolina.
           Investimento inteligente, resultados extraordinários.
         </p>
 

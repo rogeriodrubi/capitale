@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { getPropertyById } from "@/lib/data";
+import { Property } from "@/lib/types";
 import {
   Dialog,
   DialogContent,
@@ -22,12 +22,11 @@ import {
 import { formatCurrency, formatArea } from "@/lib/utils";
 
 interface PropertyModalProps {
-  propertyId: string;
+  property: Property;
   onClose: () => void;
 }
 
-export function PropertyModal({ propertyId, onClose }: PropertyModalProps) {
-  const property = getPropertyById(propertyId);
+export function PropertyModal({ property, onClose }: PropertyModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   if (!property) return null;
@@ -43,11 +42,11 @@ export function PropertyModal({ propertyId, onClose }: PropertyModalProps) {
   };
 
   const handleContact = () => {
-    const contactSection = document.getElementById("contact");
+    window.open(
+      "https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig",
+      "_blank"
+    );
     onClose();
-    setTimeout(() => {
-      contactSection?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
   };
 
   return (

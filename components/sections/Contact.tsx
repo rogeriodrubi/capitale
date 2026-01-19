@@ -111,9 +111,9 @@ export function Contact() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-neutral-600">São Paulo, SP</p>
+              <p className="text-neutral-600">Petrolina, PE</p>
               <p className="text-sm text-neutral-500 mt-2">
-                Avenida Paulista, 1000
+                Rua dos Capitais, 1000
               </p>
             </CardContent>
           </Card>

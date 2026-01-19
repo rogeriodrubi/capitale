@@ -1,6 +1,6 @@
 import { Hero } from "@/components/sections/Hero";
 import { PropertiesMap } from "@/components/sections/PropertiesMap";
-import { PropertiesList } from "@/components/sections/PropertiesList";
+import { FeaturedPropertiesCarousel } from "@/components/sections/FeaturedPropertiesCarousel";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/common/Footer";
@@ -12,7 +12,7 @@ export default function Home() {
         <Hero />
       </div>
       <PropertiesMap />
-      <PropertiesList />
+      <FeaturedPropertiesCarousel />
       <div id="about">
         <About />
       </div>

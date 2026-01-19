@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const navLinks = [
     { href: "#home", label: "Home" },
@@ -14,6 +16,9 @@ export function Header() {
     { href: "#about", label: "Sobre" },
     { href: "#contact", label: "Contato" },
   ];
+
+  const basePath = pathname === "/" ? "" : "/";
+  const resolveHref = (hashHref: string) => `${basePath}${hashHref}`;
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-neutral-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -32,20 +37,22 @@ export function Header() {
           {/* Menu Desktop */}
           <nav className="hidden md:flex gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
+                href={resolveHref(link.href)}
                 className="text-neutral-600 hover:text-cyan-600 transition-colors font-medium"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* CTA Desktop */}
-          <Button className="hidden sm:inline-block">
-            Solicitar Informações
-          </Button>
+          <Link href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" className="hidden sm:inline-block">
+            <Button>
+              Solicitar Informações
+            </Button>
+          </Link>
 
           {/* Menu Mobile */}
           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
@@ -62,17 +69,19 @@ export function Header() {
           <div className="md:hidden py-4 border-t border-neutral-200">
             <nav className="flex flex-col gap-4 mb-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.href}
-                  href={link.href}
+                  href={resolveHref(link.href)}
                   className="text-neutral-600 hover:text-cyan-600 transition-colors font-medium"
                   onClick={() => setMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
-            <Button className="w-full">Solicitar Informações</Button>
+            <Link href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" className="w-full">
+              <Button className="w-full">Solicitar Informações</Button>
+            </Link>
           </div>
         )}
       </div>

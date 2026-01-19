@@ -1,14 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { properties } from "@/lib/data";
+import { Property } from "@/lib/types";
+import { supabase } from "@/lib/supabase";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { cn } from "@/lib/utils";
 import { MapPin } from "lucide-react";
 
 export function PropertiesMap() {
-  const [selectedProperty, setSelectedProperty] = useState<string | null>(null);
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+
+  useEffect(() => {
+    async function fetchProperties() {
+      const { data } = await supabase.from("properties").select("*");
+      if (data) {
+        setProperties(data as Property[]);
+      }
+    }
+    fetchProperties();
+  }, []);
 
   return (
     <section
@@ -43,10 +55,10 @@ export function PropertiesMap() {
           {properties.map((property) => (
             <button
               key={property.id}
-              onClick={() => setSelectedProperty(property.id)}
+              onClick={() => setSelectedProperty(property)}
               className={cn(
-                "absolute w-12 h-12 sm:w-16 sm:h-16 rounded-full transition-all duration-300 transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-0 group",
-                selectedProperty === property.id
+                "absolute w-6 h-6 sm:w-8 sm:h-8 rounded-full transition-all duration-300 transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-0 group",
+                selectedProperty?.id === property.id
                   ? "bg-gradient-to-br from-cyan-500 to-cyan-700 ring-4 ring-cyan-300 scale-125 shadow-2xl"
                   : "bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-lg hover:shadow-2xl hover:scale-125"
               )}
@@ -61,9 +73,9 @@ export function PropertiesMap() {
               {/* Pulso animado */}
               <span className="absolute inset-0 rounded-full animate-pulse bg-cyan-300/40" />
 
-              {/* Ícone de pin */}
-              <span className="absolute inset-0 flex items-center justify-center">
-                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+              {/* ID do terreno */}
+              <span className="absolute inset-0 flex items-center justify-center text-white drop-shadow-lg font-bold text-xs sm:text-sm">
+                {property.id}
               </span>
 
               {/* Tooltip ao hover */}
@@ -97,22 +109,6 @@ export function PropertiesMap() {
             <p className="text-neutral-700 text-sm mb-3">
               Total de {properties.length} terrenos e imóveis disponíveis
             </p>
-            <div className="flex flex-wrap gap-2">
-              {properties.map((prop) => (
-                <button
-                  key={prop.id}
-                  onClick={() => setSelectedProperty(prop.id)}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-xs font-semibold transition-colors",
-                    selectedProperty === prop.id
-                      ? "bg-cyan-600 text-white"
-                      : "bg-neutral-200 text-neutral-700 hover:bg-cyan-200"
-                  )}
-                >
-                  #{prop.id}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -120,7 +116,7 @@ export function PropertiesMap() {
       {/* Modal de detalhes do terreno selecionado */}
       {selectedProperty && (
         <PropertyModal
-          propertyId={selectedProperty}
+          property={selectedProperty}
           onClose={() => setSelectedProperty(null)}
         />
       )}

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Property } from "@/lib/data";
+import { Property } from "@/lib/types";
 import {
   Card,
   CardContent,
@@ -17,12 +17,17 @@ import { formatCurrency, formatArea } from "@/lib/utils";
 interface PropertyCardProps {
   property: Property;
   onClick?: () => void;
+  showActionButton?: boolean;
 }
 
-export function PropertyCard({ property, onClick }: PropertyCardProps) {
+export function PropertyCard({
+  property,
+  onClick,
+  showActionButton = true,
+}: PropertyCardProps) {
   return (
     <Card
-      className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer"
+      className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer h-full flex flex-col"
       onClick={onClick}
     >
       <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
@@ -61,7 +66,7 @@ export function PropertyCard({ property, onClick }: PropertyCardProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1 flex flex-col">
         <div className="grid grid-cols-2 gap-4">
           <div className="flex items-center gap-2">
             <Ruler className="h-4 w-4 text-cyan-600" />
@@ -85,16 +90,18 @@ export function PropertyCard({ property, onClick }: PropertyCardProps) {
           {property.description}
         </p>
 
-        <Button
-          className="w-full"
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick?.();
-          }}
-          disabled={!property.availability}
-        >
-          {property.availability ? "Ver Detalhes" : "Indisponível"}
-        </Button>
+        {showActionButton && (
+          <Button
+            className="w-full mt-auto"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick?.();
+            }}
+            disabled={!property.availability}
+          >
+            {property.availability ? "Ver Detalhes" : "Indisponível"}
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

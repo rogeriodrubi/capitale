@@ -1,14 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { properties } from "@/lib/data";
+import { useState, useEffect } from "react";
+import { Property } from "@/lib/types";
+import { supabase } from "@/lib/supabase";
 import { PropertyCard } from "@/components/sections/PropertyCard";
+import { PropertyModal } from "@/components/modals/PropertyModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export function PropertiesList() {
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "terreno" | "imovel">("all");
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(
+    null
+  );
+
+  useEffect(() => {
+    async function fetchProperties() {
+      try {
+        const { data, error } = await supabase.from("properties").select("*");
+        if (error) {
+          console.error("Error fetching properties:", error);
+        } else if (data) {
+          setProperties(data as Property[]);
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchProperties();
+  }, []);
 
   const filtered = properties.filter((p) => {
     const matchesSearch =
@@ -17,6 +43,14 @@ export function PropertiesList() {
     const matchesFilter = filter === "all" || p.type === filter;
     return matchesSearch && matchesFilter;
   });
+
+  if (isLoading) {
+    return (
+      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white text-center">
+        <p className="text-xl text-neutral-600">Carregando propriedades...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white">
@@ -58,9 +92,20 @@ export function PropertiesList() {
         {/* Grid de propriedades */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((property) => (
-            <PropertyCard key={property.id} property={property} />
+            <PropertyCard
+              key={property.id}
+              property={property}
+              onClick={() => setSelectedProperty(property)}
+            />
           ))}
         </div>
+
+        {selectedProperty && (
+          <PropertyModal
+            property={selectedProperty}
+            onClose={() => setSelectedProperty(null)}
+          />
+        )}
 
         {filtered.length === 0 && (
           <div className="text-center py-12">
