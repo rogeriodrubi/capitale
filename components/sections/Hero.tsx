@@ -37,6 +37,7 @@ export function Hero() {
           </Button>
           <Button
             size="lg"
+            onClick={scrollToProperties}
             className="border-2 border-white text-white bg-transparent hover:bg-white/10 font-semibold text-lg px-8 py-6"
           >
             Saiba Mais

@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+import Link from "next/link";
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -82,9 +83,25 @@ export function Contact() {
                 Telefone
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-neutral-600">(11) 9999-9999</p>
-              <p className="text-sm text-neutral-500 mt-2">Seg-Sex: 8h-18h</p>
+
+            {/* items-center garante o alinhamento vertical centralizado */}
+            {/* justify-between garante a separação entre esquerda e direita */}
+            <CardContent className="flex flex-row items-center justify-between gap-4 py-4">
+              {/* Grupo da Esquerda */}
+              <div className="flex flex-col">
+                <p className="text-neutral-600 font-medium">(11) 9999-9999</p>
+                <p className="text-sm text-neutral-500">Seg-Sex: 8h-18h</p>
+              </div>
+
+              {/* Grupo da Direita (Botão) */}
+              <Link
+                href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig"
+                target="_blank"
+              >
+                <Button className="bg-cyan-600 text-white hover:bg-cyan-700 h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors">
+                  WhatsApp
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 

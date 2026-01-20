@@ -108,7 +108,7 @@ export function About() {
               <div className="text-cyan-100">Clientes Satisfeitos</div>
             </div>
             <div>
-              <div className="text-4xl sm:text-5xl font-bold mb-2">R$ 2.5B</div>
+              <div className="text-4xl sm:text-5xl font-bold mb-2">R$ 6.5M</div>
               <div className="text-cyan-100">em Negócios</div>
             </div>
             <div>
