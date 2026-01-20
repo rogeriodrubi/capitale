@@ -1,18 +1,4 @@
-export interface Property {
-  id: string;
-  title: string;
-  location: string;
-  area: number;
-  price: number;
-  type: "terreno" | "imovel";
-  description: string;
-  features: string[];
-  images: string[];
-  coordinates: { x: number; y: number };
-  contact: string;
-  availability: boolean;
-  featured?: boolean;
-}
+import { Property } from "./types";
 
 export const properties: Property[] = [
   // Quadra A - Imóveis de Alto Padrão (Frente)
@@ -24,9 +10,13 @@ export const properties: Property[] = [
     area: 1200,
     price: 4500000,
     type: "imovel",
-    description: "Espetacular mansão de frente para o rio, com acabamento de luxo, piscina com borda infinita e área gourmet completa.",
+    description:
+      "Espetacular mansão de frente para o rio, com acabamento de luxo, piscina com borda infinita e área gourmet completa.",
     features: ["Vista Rio", "Piscina Infinita", "5 Suítes", "Automação"],
-    images: ["https://picsum.photos/seed/p1/800/600", "https://picsum.photos/seed/p1b/800/600"],
+    images: [
+      "https://picsum.photos/seed/p1/800/600",
+      "https://picsum.photos/seed/p1b/800/600",
+    ],
     coordinates: { x: 28, y: 19.6 },
     contact: "contato@capitale.com",
     availability: true,
@@ -38,9 +28,13 @@ export const properties: Property[] = [
     area: 800,
     price: 3200000,
     type: "imovel",
-    description: "Casa com arquitetura moderna, pé direito duplo e integração total entre ambientes.",
+    description:
+      "Casa com arquitetura moderna, pé direito duplo e integração total entre ambientes.",
     features: ["Pé direito duplo", "Energia Solar", "4 Suítes"],
-    images: ["https://picsum.photos/seed/p2/800/600", "https://picsum.photos/seed/p2b/800/600"],
+    images: [
+      "https://picsum.photos/seed/p2/800/600",
+      "https://picsum.photos/seed/p2b/800/600",
+    ],
     coordinates: { x: 31.7, y: 19.5 },
     contact: "contato@capitale.com",
     availability: true,
@@ -52,7 +46,8 @@ export const properties: Property[] = [
     area: 1000,
     price: 1800000,
     type: "terreno",
-    description: "Lote estrategicamente localizado na avenida principal, ideal para comércio ou clínica.",
+    description:
+      "Lote estrategicamente localizado na avenida principal, ideal para comércio ou clínica.",
     features: ["Comercial", "Avenida Principal", "Plano"],
     images: ["https://picsum.photos/seed/p3/800/600"],
     coordinates: { x: 35.4, y: 19.4 },
@@ -66,7 +61,8 @@ export const properties: Property[] = [
     area: 800,
     price: 2900000,
     type: "imovel",
-    description: "Sobrado imponente com estilo neoclássico, jardins paisagísticos e acabamento em mármore.",
+    description:
+      "Sobrado imponente com estilo neoclássico, jardins paisagísticos e acabamento em mármore.",
     features: ["Estilo Neoclássico", "Jardim", "Escritório"],
     images: ["https://picsum.photos/seed/p4/800/600"],
     coordinates: { x: 39.1, y: 19.4 },
@@ -80,7 +76,8 @@ export const properties: Property[] = [
     area: 950,
     price: 980000,
     type: "terreno",
-    description: "Amplo terreno de esquina, excelente ventilação e posição solar.",
+    description:
+      "Amplo terreno de esquina, excelente ventilação e posição solar.",
     features: ["Esquina", "Nascente", "Bem localizado"],
     images: ["https://picsum.photos/seed/p5/800/600"],
     coordinates: { x: 42.8, y: 19.4 },
@@ -94,7 +91,8 @@ export const properties: Property[] = [
     area: 800,
     price: 2500000,
     type: "imovel",
-    description: "Casa térrea prática e sofisticada, com 3 suítes e ampla varanda gourmet.",
+    description:
+      "Casa térrea prática e sofisticada, com 3 suítes e ampla varanda gourmet.",
     features: ["Térrea", "Varanda Gourmet", "3 Suítes"],
     images: ["https://picsum.photos/seed/p6/800/600"],
     coordinates: { x: 46.5, y: 19.4 },
@@ -150,7 +148,8 @@ export const properties: Property[] = [
     area: 800,
     price: 3100000,
     type: "imovel",
-    description: "Projeto minimalista premiado, com muita luz natural e integração com a natureza.",
+    description:
+      "Projeto minimalista premiado, com muita luz natural e integração com a natureza.",
     features: ["Minimalista", "Design", "Luz Natural"],
     images: ["https://picsum.photos/seed/p10/800/600"],
     coordinates: { x: 61.7, y: 19.2 },
@@ -206,7 +205,8 @@ export const properties: Property[] = [
     area: 1100,
     price: 950000,
     type: "terreno",
-    description: "Um dos maiores lotes do condomínio, espaço de sobra para seu projeto.",
+    description:
+      "Um dos maiores lotes do condomínio, espaço de sobra para seu projeto.",
     features: ["Amplo", "Exclusivo"],
     images: ["https://picsum.photos/seed/p14/800/600"],
     coordinates: { x: 76.4, y: 18.9 },
@@ -279,7 +279,8 @@ export const properties: Property[] = [
     area: 800,
     price: 3500000,
     type: "imovel",
-    description: "Casa totalmente automatizada, sustentável e moderna. Venda de porteira fechada.",
+    description:
+      "Casa totalmente automatizada, sustentável e moderna. Venda de porteira fechada.",
     features: ["Automatizada", "Sustentável", "Mobiliada"],
     images: ["https://picsum.photos/seed/p19/800/600"],
     coordinates: { x: 54.6, y: 31.3 },
@@ -393,7 +394,8 @@ export const properties: Property[] = [
     area: 800,
     price: 2100000,
     type: "imovel",
-    description: "Oportunidade de assumir obra de casa de alto padrão e personalizar acabamentos.",
+    description:
+      "Oportunidade de assumir obra de casa de alto padrão e personalizar acabamentos.",
     features: ["Em obra", "Personalizável"],
     images: ["https://picsum.photos/seed/p27/800/600"],
     coordinates: { x: 58.4, y: 38.5 },
@@ -479,7 +481,8 @@ export const properties: Property[] = [
     area: 1500,
     price: 3800000,
     type: "imovel",
-    description: "Estilo fazenda moderna, terreno duplo, pomar e piscina natural.",
+    description:
+      "Estilo fazenda moderna, terreno duplo, pomar e piscina natural.",
     features: ["Terreno Duplo", "Pomar", "Lajr"],
     images: ["https://picsum.photos/seed/p33/800/600"],
     coordinates: { x: 25.1, y: 55.3 },
@@ -881,5 +884,3 @@ export const properties: Property[] = [
     availability: true,
   },
 ];
-
-
