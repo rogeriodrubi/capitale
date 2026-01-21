@@ -167,7 +167,7 @@ export function PropertiesMap() {
                   },
                 }}
                 className={cn(
-                  "absolute w-6 h-6 sm:w-8 sm:h-8 rounded-full transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-0 group",
+                  "absolute w-4 h-4 xs:w-5 xs:h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-cyan-600 focus:ring-offset-0 group",
                   selectedProperty?.id === property.id
                     ? "bg-cyan-700 ring-4 ring-cyan-300 scale-125 shadow-2xl" // Cor sólida quando selecionado
                     : "bg-cyan-500 shadow-lg hover:shadow-2xl hover:scale-125", // Cor sólida padrão
@@ -184,7 +184,7 @@ export function PropertiesMap() {
                 <span className="absolute inset-0 rounded-full animate-pulse bg-cyan-300/40" />
 
                 {/* ID do terreno */}
-                <span className="absolute inset-0 flex items-center justify-center text-white drop-shadow-lg font-bold text-xs sm:text-sm">
+                <span className="absolute inset-0 flex items-center justify-center text-white drop-shadow-lg font-bold text-[8px] xs:text-[9px] sm:text-xs md:text-sm">
                   {property.id}
                 </span>
 
