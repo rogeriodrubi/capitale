@@ -10,14 +10,22 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-cyan-600 to-cyan-800 flex items-center justify-center">
-      {/* Fundo com padrão */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.3)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.3)_0%,transparent_50%)]" />
-      </div>
+    <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
+      {/* Background Image with Zoom Effect */}
+      <div
+        className="absolute inset-0 hero-zoom"
+        style={{
+          backgroundImage: "url(/images/skyscraper.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Dark Overlay for Text Legibility */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-cyan-900/50" />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
           Bem-vindo à <span className="text-cyan-100">Capitale</span>
         </h1>

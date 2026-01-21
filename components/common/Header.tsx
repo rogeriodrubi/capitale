@@ -12,7 +12,7 @@ export function Header() {
 
   const navLinks = [
     { href: "#home", label: "Home" },
-    { href: "#properties", label: "Terrenos" },
+    { href: "#properties", label: "Loteamentos" },
     { href: "#about", label: "Sobre" },
     { href: "#contact", label: "Contato" },
   ];
@@ -48,10 +48,12 @@ export function Header() {
           </nav>
 
           {/* CTA Desktop */}
-          <Link href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" className="hidden sm:inline-block">
-            <Button>
-              Solicitar Informações
-            </Button>
+          <Link
+            href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig"
+            target="_blank"
+            className="hidden sm:inline-block"
+          >
+            <Button>Solicitar Informações</Button>
           </Link>
 
           {/* Menu Mobile */}
@@ -79,7 +81,11 @@ export function Header() {
                 </Link>
               ))}
             </nav>
-            <Link href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig" target="_blank" className="w-full">
+            <Link
+              href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig"
+              target="_blank"
+              className="w-full"
+            >
               <Button className="w-full">Solicitar Informações</Button>
             </Link>
           </div>
