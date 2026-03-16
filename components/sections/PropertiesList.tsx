@@ -63,14 +63,11 @@ export function PropertiesList() {
   }
 
   return (
-    <section id="search" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="search" className="pt-4 sm:pt-6 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl sm:text-5xl font-bold text-neutral-900 mb-4">
-            Todas as Propriedades
-          </h2>
+        <div className="text-center mb-6">
           <p className="text-xl text-neutral-600">
-            Explore nossa seleção completa de terrenos e imóveis
+            Explore nossa seleção completa de imóveis
           </p>
         </div>
 
