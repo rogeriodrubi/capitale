@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
 export function Hero() {
+  const scrollToSearch = () => {
+    const element = document.getElementById("search");
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const scrollToProperties = () => {
     const element = document.getElementById("properties");
     element?.scrollIntoView({ behavior: "smooth" });
@@ -38,24 +43,17 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Button
             size="lg"
-            onClick={scrollToProperties}
+            onClick={scrollToSearch}
             className="bg-white text-cyan-700 hover:bg-cyan-50 font-semibold text-lg px-8 py-6"
           >
-            Explorar Terrenos
-          </Button>
-          <Button
-            size="lg"
-            onClick={scrollToProperties}
-            className="border-2 border-white text-white bg-transparent hover:bg-white/10 font-semibold text-lg px-8 py-6"
-          >
-            Saiba Mais
+            Imóveis Disponíveis
           </Button>
         </div>
 
         {/* Seta para scroll */}
         <div className="flex justify-center animate-bounce mt-12">
           <button
-            onClick={scrollToProperties}
+            onClick={scrollToSearch}
             className="text-white hover:text-cyan-100 transition-colors"
           >
             <ArrowDown size={32} />

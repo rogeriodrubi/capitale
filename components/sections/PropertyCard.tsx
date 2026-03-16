@@ -25,18 +25,23 @@ export function PropertyCard({
   onClick,
   showActionButton = true,
 }: PropertyCardProps) {
+  // Usar imageUrl se disponível, senão usar placeholder
+  const imageUrl = property.imageUrl || "/placeholder-property.jpg";
+
   return (
     <Card
       className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer h-full flex flex-col"
       onClick={onClick}
     >
       <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
-        <Image
-          src={property.images[0]}
-          alt={property.title}
-          fill
-          className="object-cover hover:scale-110 transition-transform duration-300"
-        />
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt={property.title}
+            fill
+            className="object-cover hover:scale-110 transition-transform duration-300"
+          />
+        )}
         <div className="absolute top-3 right-3">
           <Badge
             variant="secondary"

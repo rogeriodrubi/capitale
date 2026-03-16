@@ -37,6 +37,14 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="#search"
+                  className="hover:text-cyan-400 transition"
+                >
+                  Buscar
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="#properties"
                   className="hover:text-cyan-400 transition"
                 >

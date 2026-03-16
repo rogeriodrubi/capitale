@@ -1,19 +1,14 @@
--- Create the properties table
 create table public.properties (
-  id text primary key,
+  id uuid primary key default gen_random_uuid(),
   title text not null,
   location text not null,
-  area numeric not null,
   price numeric not null,
-  type text not null check (type in ('terreno', 'imovel')),
+  area numeric not null,
   description text not null,
-  features text[] not null default '{}',
-  images text[] not null default '{}',
-  coordinates jsonb not null,
-  contact text not null,
-  availability boolean not null default true,
-  featured boolean not null default false,
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+  type text not null check (type in ('terreno', 'imovel')),
+  folder_id text not null unique,
+  availability boolean default true,
+  created_at timestamp with time zone default timezone('utc'::text, now())
 );
 
 -- Enable Row Level Security (RLS)

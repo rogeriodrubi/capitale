@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Property } from "@/lib/types";
-import { supabase } from "@/lib/supabase";
+import { supabase, getPropertyCoverImage } from "@/lib/supabase";
 import { PropertyCard } from "@/components/sections/PropertyCard";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,17 @@ export function PropertiesList() {
         if (error) {
           console.error("Error fetching properties:", error);
         } else if (data) {
-          setProperties(data as Property[]);
+          // Enriquecer cada propriedade com a URL da imagem de capa
+          const propertiesWithImages = await Promise.all(
+            data.map(async (property) => {
+              const imageUrl = await getPropertyCoverImage(property.folder_id);
+              return {
+                ...property,
+                imageUrl,
+              } as Property;
+            })
+          );
+          setProperties(propertiesWithImages);
         }
       } catch (err) {
         console.error("Unexpected error:", err);
@@ -53,7 +63,7 @@ export function PropertiesList() {
   }
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="search" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl sm:text-5xl font-bold text-neutral-900 mb-4">

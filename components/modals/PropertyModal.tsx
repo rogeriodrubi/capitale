@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Property } from "@/lib/types";
+import { getPropertyImages } from "@/lib/supabase";
 import {
   Dialog,
   DialogContent,
@@ -28,16 +29,35 @@ interface PropertyModalProps {
 
 export function PropertyModal({ property, onClose }: PropertyModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState<string[]>([]);
+  const [isLoadingImages, setIsLoadingImages] = useState(true);
+
+  // Carregar todas as imagens quando o modal abrir
+  useEffect(() => {
+    async function loadImages() {
+      if (property.folder_id) {
+        setIsLoadingImages(true);
+        const allImages = await getPropertyImages(property.folder_id);
+        setImages(allImages.length > 0 ? allImages : [property.imageUrl || "/placeholder-property.jpg"].filter(Boolean));
+        setIsLoadingImages(false);
+      } else {
+        // Fallback para imageUrl se não houver folder_id
+        setImages(property.imageUrl ? [property.imageUrl] : ["/placeholder-property.jpg"]);
+        setIsLoadingImages(false);
+      }
+    }
+    loadImages();
+  }, [property.folder_id, property.imageUrl]);
 
   if (!property) return null;
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? property.images.length - 1 : prev - 1
+      prev === 0 ? images.length - 1 : prev - 1
     );
   };
 
@@ -62,42 +82,54 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
         <div className="space-y-6">
           {/* Carrossel de Imagens */}
           <div className="relative w-full h-64 sm:h-96 rounded-lg overflow-hidden bg-neutral-100">
-            <Image
-              src={property.images[currentImageIndex]}
-              alt={`${property.title} - ${currentImageIndex + 1}`}
-              fill
-              className="object-cover"
-            />
-
-            {property.images.length > 1 && (
+            {isLoadingImages ? (
+              <div className="w-full h-full flex items-center justify-center">
+                <p className="text-neutral-500">Carregando imagens...</p>
+              </div>
+            ) : images.length > 0 ? (
               <>
-                <button
-                  onClick={prevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
+                <Image
+                  src={images[currentImageIndex]}
+                  alt={`${property.title} - ${currentImageIndex + 1}`}
+                  fill
+                  className="object-cover"
+                />
 
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                  {property.images.map((_, idx) => (
+                {images.length > 1 && (
+                  <>
                     <button
-                      key={idx}
-                      onClick={() => setCurrentImageIndex(idx)}
-                      className={`h-2 rounded-full transition ${
-                        idx === currentImageIndex
-                          ? "bg-cyan-600 w-6"
-                          : "bg-white/50 w-2"
-                      }`}
-                    />
-                  ))}
-                </div>
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full transition"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentImageIndex(idx)}
+                          className={`h-2 rounded-full transition ${
+                            idx === currentImageIndex
+                              ? "bg-cyan-600 w-6"
+                              : "bg-white/50 w-2"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <p className="text-neutral-500">Nenhuma imagem disponível</p>
+              </div>
             )}
           </div>
 
@@ -157,22 +189,7 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
             </p>
           </div>
 
-          {/* Características */}
-          <div>
-            <h3 className="font-semibold text-neutral-900 mb-4">
-              Características
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              {property.features.map((feature, idx) => (
-                <div
-                  key={idx}
-                  className="p-3 bg-neutral-100 rounded-lg text-neutral-700 text-sm font-medium"
-                >
-                  ✓ {feature}
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Características - Removido pois não está no tipo Property */}
 
           {/* Botões de Ação */}
           <div className="flex gap-4 pt-4 border-t border-neutral-200">

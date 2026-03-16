@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Property } from "@/lib/types";
-import { supabase } from "@/lib/supabase";
+import { supabase, getPropertyCoverImage } from "@/lib/supabase";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { cn } from "@/lib/utils";
 import { MapPin } from "lucide-react";
@@ -43,7 +43,17 @@ export function PropertiesMap() {
     async function fetchProperties() {
       const { data } = await supabase.from("properties").select("*");
       if (data) {
-        setProperties(data as Property[]);
+        // Enriquecer cada propriedade com a URL da imagem de capa
+        const propertiesWithImages = await Promise.all(
+          data.map(async (property) => {
+            const imageUrl = await getPropertyCoverImage(property.folder_id);
+            return {
+              ...property,
+              imageUrl,
+            } as Property;
+          })
+        );
+        setProperties(propertiesWithImages);
       }
     }
     fetchProperties();

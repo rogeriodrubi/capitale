@@ -12,6 +12,7 @@ export function Header() {
 
   const navLinks = [
     { href: "#home", label: "Home" },
+    { href: "#search", label: "Buscar" },
     { href: "#properties", label: "Loteamentos" },
     { href: "#about", label: "Sobre" },
     { href: "#contact", label: "Contato" },

@@ -1,4 +1,5 @@
 import { Hero } from "@/components/sections/Hero";
+import { PropertiesList } from "@/components/sections/PropertiesList";
 import { PropertiesMap } from "@/components/sections/PropertiesMap";
 import { FeaturedPropertiesCarousel } from "@/components/sections/FeaturedPropertiesCarousel";
 import { About } from "@/components/sections/About";
@@ -10,6 +11,9 @@ export default function Home() {
     <main>
       <div id="home">
         <Hero />
+      </div>
+      <div id="search">
+        <PropertiesList />
       </div>
       <PropertiesMap />
       <FeaturedPropertiesCarousel />

@@ -4,8 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { supabase } from "@/lib/supabase";
+import { supabase, getPropertyCoverImage } from "@/lib/supabase";
 import { PropertyCard } from "@/components/sections/PropertyCard";
+import { Property } from "@/lib/types";
 
 function getPerView(width: number) {
   if (width >= 1024) return 3; // lg
@@ -21,7 +22,7 @@ function chunk<T>(arr: T[], size: number) {
 }
 
 export function FeaturedPropertiesCarousel() {
-  const [featured, setFeatured] = useState<any[]>([]);
+  const [featured, setFeatured] = useState<Property[]>([]);
   const [perView, setPerView] = useState(3);
   const [pageIndex, setPageIndex] = useState(0);
 
@@ -33,7 +34,17 @@ export function FeaturedPropertiesCarousel() {
         .eq("featured", true);
       
       if (data) {
-        setFeatured(data);
+        // Enriquecer cada propriedade com a URL da imagem de capa
+        const propertiesWithImages = await Promise.all(
+          data.map(async (property) => {
+            const imageUrl = await getPropertyCoverImage(property.folder_id);
+            return {
+              ...property,
+              imageUrl,
+            } as Property;
+          })
+        );
+        setFeatured(propertiesWithImages);
       }
     }
     fetchFeatured();
