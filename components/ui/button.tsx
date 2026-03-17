@@ -1,6 +1,6 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { PRIMARY_DARK, primarySolidBg } from "@/lib/theme";
+import { primarySolidBg } from "@/lib/theme";
 
 type ButtonVariant =
   | "default"
