@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Property } from "@/lib/types";
-import { supabase, getPropertyCoverImage } from "@/lib/supabase";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { cn } from "@/lib/utils";
 import { MapPin } from "lucide-react";
@@ -18,8 +17,11 @@ import {
   getCityFromSubdivision,
 } from "@/lib/subdivisions";
 
-export function PropertiesMap() {
-  const [properties, setProperties] = useState<Property[]>([]);
+interface PropertiesMapProps {
+  properties: Property[];
+}
+
+export function PropertiesMap({ properties }: PropertiesMapProps) {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null,
   );
@@ -35,27 +37,6 @@ export function PropertiesMap() {
     const savedSubdivision = loadSubdivisionSelection();
     setSelectedSubdivision(savedSubdivision);
     setSelectedCity(getCityFromSubdivision(savedSubdivision));
-  }, []);
-
-  // Buscar propriedades do Supabase
-  useEffect(() => {
-    async function fetchProperties() {
-      const { data } = await supabase.from("properties").select("*");
-      if (data) {
-        // Enriquecer cada propriedade com a URL da imagem de capa
-        const propertiesWithImages = await Promise.all(
-          data.map(async (property) => {
-            const imageUrl = await getPropertyCoverImage(property.folder_id);
-            return {
-              ...property,
-              imageUrl,
-            } as Property;
-          })
-        );
-        setProperties(propertiesWithImages);
-      }
-    }
-    fetchProperties();
   }, []);
 
   // Configuração do loteamento atual

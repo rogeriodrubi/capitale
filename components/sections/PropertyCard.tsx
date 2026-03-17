@@ -25,8 +25,11 @@ export function PropertyCard({
   onClick,
   showActionButton = true,
 }: PropertyCardProps) {
-  // Usar imageUrl se disponível, senão usar placeholder
-  const imageUrl = property.imageUrl || "/placeholder-property.jpg";
+  const fallbackImage =
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23e5e5e5'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-family='sans-serif' font-size='24'>Sem imagem</text></svg>";
+
+  // Usar imageUrl se disponível, senão usar placeholder inline (evita 404)
+  const imageUrl = property.imageUrl || fallbackImage;
 
   return (
     <Card
@@ -40,6 +43,7 @@ export function PropertyCard({
             alt={property.title}
             fill
             className="object-cover hover:scale-110 transition-transform duration-300"
+            loading="lazy"
           />
         )}
         <div className="absolute top-3 right-3">

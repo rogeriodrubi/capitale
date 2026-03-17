@@ -1,66 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { Property } from "@/lib/types";
-import { supabase, getPropertyCoverImage } from "@/lib/supabase";
 import { PropertyCard } from "@/components/sections/PropertyCard";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export function PropertiesList() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface PropertiesListProps {
+  properties: Property[];
+}
+
+export function PropertiesList({ properties }: PropertiesListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "terreno" | "imovel">("all");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
   );
 
-  useEffect(() => {
-    async function fetchProperties() {
-      try {
-        const { data, error } = await supabase.from("properties").select("*");
-        if (error) {
-          console.error("Error fetching properties:", error);
-        } else if (data) {
-          // Enriquecer cada propriedade com a URL da imagem de capa
-          const propertiesWithImages = await Promise.all(
-            data.map(async (property) => {
-              const imageUrl = await getPropertyCoverImage(property.folder_id);
-              return {
-                ...property,
-                imageUrl,
-              } as Property;
-            })
-          );
-          setProperties(propertiesWithImages);
-        }
-      } catch (err) {
-        console.error("Unexpected error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchProperties();
-  }, []);
-
-  const filtered = properties.filter((p) => {
-    const matchesSearch =
-      p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.location.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter === "all" || p.type === filter;
-    return matchesSearch && matchesFilter;
-  });
-
-  if (isLoading) {
-    return (
-      <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white text-center">
-        <p className="text-xl text-neutral-600">Carregando propriedades...</p>
-      </section>
-    );
-  }
+  const filtered = useMemo(
+    () =>
+      properties.filter((p) => {
+        const matchesSearch =
+          p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          p.location.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesFilter = filter === "all" || p.type === filter;
+        return matchesSearch && matchesFilter;
+      }),
+    [properties, searchTerm, filter]
+  );
 
   return (
     <section id="search" className="pt-4 sm:pt-6 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-white">
