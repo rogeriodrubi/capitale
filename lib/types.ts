@@ -5,7 +5,6 @@ export interface Property {
   area: number;
   price: number;
   description: string;
-  type: "terreno" | "imovel";
   folder_id: string;
   availability: boolean | null;
   created_at: string | null;
@@ -15,4 +14,7 @@ export interface Property {
   features?: string[];
   contact?: string;
   featured?: boolean;
+  // Novos campos de filtro (tabelas Supabase)
+  listing_type?: "venda" | "aluguel";
+  property_category?: "apartamento" | "casa";
 }

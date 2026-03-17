@@ -49,13 +49,13 @@ export function PropertyCard({
         <div className="absolute top-3 right-3">
           <Badge
             variant="secondary"
-            className={
-              property.type === "terreno"
-                ? "bg-cyan-500 text-white"
-                : "bg-purple-500 text-white"
-            }
+            className="bg-purple-500 text-white"
           >
-            {property.type === "terreno" ? "Terreno" : "Imóvel"}
+            {property.property_category === "casa"
+              ? "Casa"
+              : property.property_category === "apartamento"
+              ? "Apartamento"
+              : "Imóvel"}
           </Badge>
         </div>
         {!property.availability && (

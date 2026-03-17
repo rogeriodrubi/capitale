@@ -163,11 +163,15 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
               <div className="flex items-center gap-2 mb-2">
                 <MapPin className="h-5 w-5 text-purple-600" />
                 <span className="text-sm font-semibold text-neutral-600">
-                  Tipo
+                  Categoria
                 </span>
               </div>
               <p className="text-2xl font-bold text-neutral-900 capitalize">
-                {property.type === "terreno" ? "Terreno" : "Imóvel"}
+                {property.property_category === "casa"
+                  ? "Casa"
+                  : property.property_category === "apartamento"
+                  ? "Apartamento"
+                  : "Imóvel"}
               </p>
             </div>
           </div>

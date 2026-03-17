@@ -13,7 +13,12 @@ interface PropertiesListProps {
 
 export function PropertiesList({ properties }: PropertiesListProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "terreno" | "imovel">("all");
+  const [listingTypeFilter, setListingTypeFilter] = useState<
+    "all" | "venda" | "aluguel"
+  >("all");
+  const [categoryFilter, setCategoryFilter] = useState<
+    "all" | "casa" | "apartamento"
+  >("all");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
   );
@@ -24,10 +29,18 @@ export function PropertiesList({ properties }: PropertiesListProps) {
         const matchesSearch =
           p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           p.location.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesFilter = filter === "all" || p.type === filter;
-        return matchesSearch && matchesFilter;
+
+        const matchesListingType =
+          listingTypeFilter === "all" ||
+          p.listing_type === listingTypeFilter;
+
+        const matchesCategory =
+          categoryFilter === "all" ||
+          p.property_category === categoryFilter;
+
+        return matchesSearch && matchesListingType && matchesCategory;
       }),
-    [properties, searchTerm, filter]
+      [properties, searchTerm, listingTypeFilter, categoryFilter]
   );
 
   return (
@@ -47,20 +60,44 @@ export function PropertiesList({ properties }: PropertiesListProps) {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="flex-1"
           />
-          <div className="flex gap-2">
-            {(["all", "terreno", "imovel"] as const).map((f) => (
-              <Button
-                key={f}
-                variant={filter === f ? "default" : "outline"}
-                onClick={() => setFilter(f)}
-              >
-                {f === "all"
-                  ? "Todos"
-                  : f === "terreno"
-                  ? "Terrenos"
-                  : "Imóveis"}
-              </Button>
-            ))}
+          <div className="flex flex-col sm:flex-row gap-2 sm:w-1/2">
+            {/* Coluna esquerda: Aluguel / Venda */}
+            <div className="flex-1 flex gap-2">
+              {(["aluguel", "venda"] as const).map((value) => (
+                <Button
+                  key={value}
+                  className="flex-1"
+                  variant={
+                    listingTypeFilter === value ? "default" : "outline"
+                  }
+                  onClick={() =>
+                    setListingTypeFilter(
+                      listingTypeFilter === value ? "all" : value
+                    )
+                  }
+                >
+                  {value === "aluguel" ? "Aluguel" : "Venda"}
+                </Button>
+              ))}
+            </div>
+
+            {/* Coluna direita: Casas / Apartamentos */}
+            <div className="flex-1 flex gap-2">
+              {(["casa", "apartamento"] as const).map((value) => (
+                <Button
+                  key={value}
+                  className="flex-1"
+                  variant={categoryFilter === value ? "default" : "outline"}
+                  onClick={() =>
+                    setCategoryFilter(
+                      categoryFilter === value ? "all" : value
+                    )
+                  }
+                >
+                  {value === "casa" ? "Casas" : "Apartamentos"}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
 
