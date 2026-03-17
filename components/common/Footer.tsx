@@ -10,13 +10,13 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-50 py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#111827] text-neutral-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Sobre */}
           <div>
             <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-              <div className="w-6 h-6 bg-cyan-600 rounded flex items-center justify-center">
+              <div className="w-6 h-6 rounded flex items-center justify-center bg-[#37474F]">
                 <span className="text-white font-bold text-sm">C</span>
               </div>
               Capitale

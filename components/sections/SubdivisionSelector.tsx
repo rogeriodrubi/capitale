@@ -31,7 +31,7 @@ export function SubdivisionSelector({
               <Button
                 key={city}
                 onClick={() => onCityChange(city)}
-                variant={selectedCity === city ? "default" : "outline"}
+                variant={selectedCity === city ? "primary" : "filter"}
                 size="lg"
                 className="whitespace-nowrap h-[41px] text-base px-12"
               >
@@ -59,7 +59,7 @@ export function SubdivisionSelector({
                 <Button
                   key={subdivision.id}
                   onClick={() => onSubdivisionChange(subdivision.id)}
-                  variant={isSelected ? "default" : "outline"}
+                  variant={isSelected ? "primary" : "filter"}
                   size="sm"
                   className="whitespace-nowrap"
                 >

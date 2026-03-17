@@ -6,6 +6,7 @@ import { PropertyCard } from "@/components/sections/PropertyCard";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 interface PropertiesListProps {
   properties: Property[];
@@ -44,31 +45,42 @@ export function PropertiesList({ properties }: PropertiesListProps) {
   );
 
   return (
-    <section id="search" className="pt-4 sm:pt-6 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-white">
+    <section
+      id="search"
+      className="pt-8 sm:pt-10 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8 bg-white"
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-6">
-          <p className="text-xl text-neutral-600">
+        <div className="text-center mb-6 max-w-2xl mx-auto">
+          <p className="text-2xl sm:text-3xl font-semibold text-neutral-900">
             Explore nossa seleção completa de imóveis
+          </p>
+          <p className="mt-2 text-sm sm:text-base text-neutral-500">
+            Use a busca e os filtros abaixo para encontrar o imóvel ideal por
+            cidade, tipo de anúncio e categoria.
           </p>
         </div>
 
         {/* Controles de filtro */}
-        <div className="mb-8 space-y-4 sm:space-y-0 sm:flex gap-4">
+        <div className="mb-10 w-full max-w-2xl mx-auto flex flex-col gap-3">
           <Input
             placeholder="Buscar por nome ou localização..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1"
+            className="w-full border-neutral-200 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:border-cyan-500"
           />
-          <div className="flex flex-col sm:flex-row gap-2 sm:w-1/2">
+          <div className="flex flex-col gap-2 w-full">
             {/* Coluna esquerda: Aluguel / Venda */}
-            <div className="flex-1 flex gap-2">
+            <div className="w-full flex gap-2">
               {(["aluguel", "venda"] as const).map((value) => (
                 <Button
                   key={value}
-                  className="flex-1"
+                  className={cn(
+                    "flex-1",
+                    listingTypeFilter === value &&
+                      "shadow-md hover:shadow-lg hover:scale-105",
+                  )}
                   variant={
-                    listingTypeFilter === value ? "default" : "outline"
+                    listingTypeFilter === value ? "primary" : "filter"
                   }
                   onClick={() =>
                     setListingTypeFilter(
@@ -82,12 +94,16 @@ export function PropertiesList({ properties }: PropertiesListProps) {
             </div>
 
             {/* Coluna direita: Casas / Apartamentos */}
-            <div className="flex-1 flex gap-2">
+            <div className="w-full flex gap-2">
               {(["casa", "apartamento"] as const).map((value) => (
                 <Button
                   key={value}
-                  className="flex-1"
-                  variant={categoryFilter === value ? "default" : "outline"}
+                  className={cn(
+                    "flex-1",
+                    categoryFilter === value &&
+                      "shadow-md hover:shadow-lg hover:scale-105",
+                  )}
+                  variant={categoryFilter === value ? "primary" : "filter"}
                   onClick={() =>
                     setCategoryFilter(
                       categoryFilter === value ? "all" : value

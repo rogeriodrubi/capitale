@@ -92,7 +92,7 @@ export function PropertiesMap({ properties }: PropertiesMapProps) {
         </div>
 
         {/* Mapa interativo com terrenos */}
-        <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-cyan-200 bg-neutral-200">
+        <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-[#37474F33] bg-neutral-200">
           {/* Imagem de fundo com transição animada */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -175,7 +175,7 @@ export function PropertiesMap({ properties }: PropertiesMapProps) {
 
         {/* Informações e legenda */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 bg-cyan-50 rounded-lg border border-cyan-200">
+          <div className="p-4 rounded-lg border border-[#37474F1A] bg-white">
             <h3 className="flex items-center gap-2 font-semibold text-neutral-900 mb-2">
               <MapPin className="w-5 h-5 text-cyan-600" />
               Como usar o mapa
@@ -188,7 +188,7 @@ export function PropertiesMap({ properties }: PropertiesMapProps) {
             </ul>
           </div>
 
-          <div className="p-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg border border-blue-200">
+          <div className="p-4 bg-white rounded-lg border border-blue-200">
             <h3 className="font-semibold text-neutral-900 mb-2">
               {currentSubdivision.name} - {currentSubdivision.city}
             </h3>

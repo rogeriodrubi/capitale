@@ -33,7 +33,7 @@ export function PropertyCard({
 
   return (
     <Card
-      className="overflow-hidden hover:shadow-lg transition-all duration-200 cursor-pointer h-full flex flex-col"
+      className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm hover:shadow-xl hover:scale-105 transition-all duration-200 cursor-pointer h-full flex flex-col"
       onClick={onClick}
     >
       <div className="relative h-48 w-full overflow-hidden bg-neutral-100">
@@ -49,7 +49,7 @@ export function PropertyCard({
         <div className="absolute top-3 right-3">
           <Badge
             variant="secondary"
-            className="bg-purple-500 text-white"
+            className="bg-cyan-600 text-white shadow-md"
           >
             {property.property_category === "casa"
               ? "Casa"
@@ -68,9 +68,11 @@ export function PropertyCard({
       </div>
 
       <CardHeader>
-        <CardTitle className="text-lg">{property.title}</CardTitle>
+        <CardTitle className="text-lg font-semibold text-neutral-900">
+          {property.title}
+        </CardTitle>
         <CardDescription className="flex items-center gap-1">
-          <MapPin className="h-4 w-4" />
+          <MapPin className="h-4 w-4 text-cyan-600" />
           {property.location}
         </CardDescription>
       </CardHeader>
@@ -88,7 +90,7 @@ export function PropertyCard({
             <DollarSign className="h-4 w-4 text-cyan-600" />
             <div>
               <p className="text-xs text-neutral-500">Preço</p>
-              <p className="font-semibold text-cyan-600">
+              <p className="font-semibold text-cyan-700">
                 {formatCurrency(property.price)}
               </p>
             </div>
@@ -102,6 +104,7 @@ export function PropertyCard({
         {showActionButton && (
           <Button
             className="w-full mt-auto"
+            variant={property.availability ? "primary" : "outline"}
             onClick={(e) => {
               e.stopPropagation();
               onClick?.();

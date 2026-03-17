@@ -97,7 +97,7 @@ export function About() {
         </div>
 
         {/* Estatísticas */}
-        <div className="bg-cyan-600 text-white rounded-2xl p-8 sm:p-12 mb-16">
+        <div className="bg-[#37474F] text-white rounded-2xl p-8 sm:p-12 mb-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl sm:text-5xl font-bold mb-2">150+</div>

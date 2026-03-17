@@ -98,7 +98,7 @@ export function Contact() {
                 href="https://api.whatsapp.com/send/?phone=5587999389753&text&type=phone_number&app_absent=0&utm_source=ig"
                 target="_blank"
               >
-                <Button className="bg-cyan-600 text-white hover:bg-cyan-700 h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors">
+                <Button variant="primary" size="sm">
                   WhatsApp
                 </Button>
               </Link>
@@ -188,7 +188,7 @@ export function Contact() {
                   breve.
                 </div>
               ) : (
-                <Button type="submit" className="w-full" size="lg">
+                <Button type="submit" className="w-full" size="lg" variant="primary">
                   <Send className="mr-2 h-4 w-4" />
                   Enviar Mensagem
                 </Button>
