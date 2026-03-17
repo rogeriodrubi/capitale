@@ -75,39 +75,6 @@ export const SUBDIVISIONS_BY_CITY: Record<City, SubdivisionConfig[]> = {
 };
 
 /**
- * Gera coordenadas em grid organizado (3 colunas x 4 linhas)
- * Para distribuir 10 propriedades uniformemente no mapa
- */
-export function generateGridCoordinates(
-  count: number = 10,
-): Array<{ x: number; y: number }> {
-  const coordinates: Array<{ x: number; y: number }> = [];
-  const cols = 3;
-  const rows = Math.ceil(count / cols);
-
-  // Margens e espaçamento
-  const marginX = 15; // 15% de margem horizontal
-  const marginY = 15; // 15% de margem vertical
-  const availableWidth = 100 - 2 * marginX;
-  const availableHeight = 100 - 2 * marginY;
-
-  const spacingX = availableWidth / (cols - 1 || 1);
-  const spacingY = availableHeight / (rows - 1 || 1);
-
-  for (let i = 0; i < count; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-
-    const x = marginX + col * spacingX;
-    const y = marginY + row * spacingY;
-
-    coordinates.push({ x, y });
-  }
-
-  return coordinates;
-}
-
-/**
  * Chave para localStorage
  */
 const STORAGE_KEY = "capitale_selected_subdivision";

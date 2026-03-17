@@ -16,7 +16,6 @@ import {
   loadSubdivisionSelection,
   saveSubdivisionSelection,
   getCityFromSubdivision,
-  generateGridCoordinates,
 } from "@/lib/subdivisions";
 
 export function PropertiesMap() {
@@ -62,25 +61,10 @@ export function PropertiesMap() {
   // Configuração do loteamento atual
   const currentSubdivision = SUBDIVISIONS[selectedSubdivision];
 
-  // Gerar coordenadas para os 3 novos mapas (exceto Antonio Cassimiro)
-  const gridCoordinates = generateGridCoordinates(10);
-
-  // Filtrar e preparar propriedades com coordenadas apropriadas
-  const displayedProperties = properties
-    .filter((prop) => currentSubdivision.propertyIds.includes(prop.id))
-    .map((prop, index) => {
-      // Antonio Cassimiro mantém coordenadas originais
-      if (selectedSubdivision === "vista-antonio-cassimiro") {
-        return prop;
-      }
-
-      // Outros mapas usam coordenadas em grid
-      const gridCoord = gridCoordinates[index % gridCoordinates.length];
-      return {
-        ...prop,
-        coordinates: gridCoord,
-      };
-    });
+  // Propriedades exibidas para o loteamento atual
+  const displayedProperties = properties.filter((prop) =>
+    currentSubdivision.propertyIds.includes(prop.id),
+  );
 
   // Handlers
   const handleCityChange = (city: City) => {
@@ -183,8 +167,8 @@ export function PropertiesMap() {
                     : "bg-cyan-500 shadow-lg hover:shadow-2xl hover:scale-125", // Cor sólida padrão
                 )}
                 style={{
-                  left: `${property.coordinates.x}%`,
-                  top: `${property.coordinates.y}%`,
+                  left: `${20 + index * 5}%`,
+                  top: `50%`,
                   transform: "translate(-50%, -50%)",
                 }}
                 title={property.title}
