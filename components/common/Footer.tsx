@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Mail,
   Phone,
@@ -10,16 +11,22 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-[#111827] text-neutral-50 py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#37474F] text-neutral-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Sobre */}
           <div>
             <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-              <div className="w-6 h-6 rounded flex items-center justify-center bg-[#37474F]">
-                <span className="text-white font-bold text-sm">C</span>
+              <div className="h-full flex items-center overflow-hidden">
+                <Image
+                  src="/images/logo-text.png"
+                  alt="Capitale Imobiliária"
+                  width={160}
+                  height={32}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
               </div>
-              Capitale
             </h3>
             <p className="text-neutral-400 text-sm">
               Sua parceira em investimentos imobiliários de sucesso.

@@ -16,6 +16,7 @@ import {
   MapPin,
   Ruler,
   DollarSign,
+  Bed,
   ChevronLeft,
   ChevronRight,
   X,
@@ -31,6 +32,16 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [images, setImages] = useState<string[]>([]);
   const [isLoadingImages, setIsLoadingImages] = useState(true);
+
+  const propertyCategoryLabel = (() => {
+    const raw = property?.property_category;
+    if (!raw) return undefined;
+
+    const normalized = raw.toString().trim().toLowerCase();
+    if (normalized === "casa") return "Casa";
+    if (normalized === "apartamento") return "Apartamento";
+    return undefined;
+  })();
 
   // Carregar todas as imagens quando o modal abrir
   useEffect(() => {
@@ -73,7 +84,17 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl">{property.title}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold text-neutral-900 flex items-center gap-2 flex-wrap">
+            {propertyCategoryLabel && (
+              <span className="whitespace-nowrap">{propertyCategoryLabel}</span>
+            )}
+            {propertyCategoryLabel && (
+              <span className="text-neutral-400" aria-hidden="true">
+                -
+              </span>
+            )}
+            <span className="whitespace-nowrap">{property.location}</span>
+          </DialogTitle>
           <DialogClose className="absolute right-4 top-4" onClick={onClose}>
             <X className="h-5 w-5" />
           </DialogClose>
@@ -134,45 +155,35 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
           </div>
 
           {/* Informações Principais */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 bg-cyan-50 rounded-lg border border-cyan-200">
-              <div className="flex items-center gap-2 mb-2">
-                <Ruler className="h-5 w-5 text-cyan-600" />
-                <span className="text-sm font-semibold text-neutral-600">
-                  Área
-                </span>
+          <div className="grid gap-4 grid-cols-3">
+            <div className="flex items-center gap-2">
+              <Ruler className="h-4 w-4 text-cyan-600" />
+              <div>
+                <p className="text-xs text-neutral-500">Área</p>
+                <p className="font-semibold">
+                  {formatArea(property.area)} m²
+                </p>
               </div>
-              <p className="text-2xl font-bold text-neutral-900">
-                {formatArea(property.area)} m²
-              </p>
             </div>
 
-            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-              <div className="flex items-center gap-2 mb-2">
-                <DollarSign className="h-5 w-5 text-green-600" />
-                <span className="text-sm font-semibold text-neutral-600">
-                  Preço
-                </span>
+            <div className="flex items-center gap-2">
+              <Bed className="h-4 w-4 text-cyan-600" />
+              <div>
+                <p className="text-xs text-neutral-500">Quartos</p>
+                <p className="font-semibold">
+                  {property.bedrooms ?? "-"}
+                </p>
               </div>
-              <p className="text-2xl font-bold text-neutral-900">
-                {formatCurrency(property.price)}
-              </p>
             </div>
 
-            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <div className="flex items-center gap-2 mb-2">
-                <MapPin className="h-5 w-5 text-purple-600" />
-                <span className="text-sm font-semibold text-neutral-600">
-                  Categoria
-                </span>
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-cyan-600" />
+              <div>
+                <p className="text-xs text-neutral-500">Preço</p>
+                <p className="font-semibold text-cyan-700">
+                  {formatCurrency(property.price)}
+                </p>
               </div>
-              <p className="text-2xl font-bold text-neutral-900 capitalize">
-                {property.property_category === "casa"
-                  ? "Casa"
-                  : property.property_category === "apartamento"
-                  ? "Apartamento"
-                  : "Imóvel"}
-              </p>
             </div>
           </div>
 
