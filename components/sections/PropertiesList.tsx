@@ -151,7 +151,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-6 max-w-2xl mx-auto">
-          <p className="text-2xl sm:text-3xl font-semibold text-neutral-900">
+          <p className="text-[1.2rem] sm:text-[1.5rem] font-semibold text-neutral-900">
             Explore nossa seleção completa de imóveis
           </p>
         </div>
@@ -191,6 +191,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
               key={property.id}
               property={property}
               onClick={() => handleSelectProperty(property)}
+              showCategoryBadge={isPropriedadesRoute}
             />
           ))}
         </div>

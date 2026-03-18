@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { Hero } from "@/components/sections/Hero";
 import { PropertiesList } from "@/components/sections/PropertiesList";
-import { PropertiesMap } from "@/components/sections/PropertiesMap";
 import { FeaturedPropertiesCarousel } from "@/components/sections/FeaturedPropertiesCarousel";
 import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
@@ -45,7 +44,6 @@ export default async function Home() {
           <PropertiesList properties={properties} />
         </Suspense>
       </div>
-      <PropertiesMap properties={properties} />
       <FeaturedPropertiesCarousel />
       <div id="about">
         <About />

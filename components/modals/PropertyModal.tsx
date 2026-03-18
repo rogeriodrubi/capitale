@@ -208,7 +208,12 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
 
           {/* Botões de Ação */}
           <div className="flex gap-4 pt-4 border-t border-neutral-200">
-            <Button onClick={handleContact} className="flex-1" size="lg">
+            <Button
+              onClick={handleContact}
+              className="flex-1"
+              size="lg"
+              variant="primary"
+            >
               Solicitar Informações
             </Button>
             <Button

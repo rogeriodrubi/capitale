@@ -52,10 +52,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="#properties"
+                  href="#search"
                   className="hover:text-cyan-400 transition"
                 >
-                  Terrenos
+                  Imóveis
                 </Link>
               </li>
               <li>

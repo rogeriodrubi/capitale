@@ -17,12 +17,14 @@ interface PropertyCardProps {
   property: Property;
   onClick?: () => void;
   showActionButton?: boolean;
+  showCategoryBadge?: boolean;
 }
 
 export function PropertyCard({
   property,
   onClick,
   showActionButton = true,
+  showCategoryBadge = true,
 }: PropertyCardProps) {
   const fallbackImage =
     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23e5e5e5'/><text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999999' font-family='sans-serif' font-size='24'>Sem imagem</text></svg>";
@@ -55,14 +57,16 @@ export function PropertyCard({
             loading="lazy"
           />
         )}
-        <div className="absolute top-3 right-3">
-          <Badge
-            variant="secondary"
-            className="bg-cyan-600 text-white shadow-md"
-          >
-            {propertyCategoryLabel ?? "Imóvel"}
-          </Badge>
-        </div>
+        {showCategoryBadge && (
+          <div className="absolute top-3 right-3">
+            <Badge
+              variant="secondary"
+              className="bg-cyan-600 text-white shadow-md"
+            >
+              {propertyCategoryLabel ?? "Imóvel"}
+            </Badge>
+          </div>
+        )}
         {!property.availability && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <span className="text-white font-semibold text-lg">
