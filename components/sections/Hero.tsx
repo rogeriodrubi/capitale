@@ -27,7 +27,6 @@ export function Hero() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-4">
         <p className="text-xl sm:text-2xl text-cyan-50 mb-8 max-w-2xl mx-auto leading-relaxed">
           Descubra as melhores oportunidades imobiliárias de Petrolina.
-          Investimento inteligente, resultados extraordinários.
         </p>
 
         {/* Seta para scroll */}
