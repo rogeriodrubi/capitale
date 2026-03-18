@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Ruler, DollarSign } from "lucide-react";
+import { MapPin, Ruler, DollarSign, Bed } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatArea } from "@/lib/utils";
 
@@ -30,6 +30,16 @@ export function PropertyCard({
 
   // Usar imageUrl se disponível, senão usar placeholder inline (evita 404)
   const imageUrl = property.imageUrl || fallbackImage;
+
+  const propertyCategoryLabel = (() => {
+    const raw = property.property_category;
+    if (!raw) return undefined;
+
+    const normalized = raw.toString().trim().toLowerCase();
+    if (normalized === "casa") return "Casa";
+    if (normalized === "apartamento") return "Apartamento";
+    return undefined;
+  })();
 
   return (
     <Card
@@ -51,11 +61,7 @@ export function PropertyCard({
             variant="secondary"
             className="bg-cyan-600 text-white shadow-md"
           >
-            {property.property_category === "casa"
-              ? "Casa"
-              : property.property_category === "apartamento"
-              ? "Apartamento"
-              : "Imóvel"}
+            {propertyCategoryLabel ?? "Imóvel"}
           </Badge>
         </div>
         {!property.availability && (
@@ -68,17 +74,25 @@ export function PropertyCard({
       </div>
 
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-neutral-900">
-          {property.title}
+        <CardTitle className="text-lg font-semibold text-neutral-900 flex items-center gap-2 flex-wrap">
+          {propertyCategoryLabel && (
+            <span className="whitespace-nowrap">{propertyCategoryLabel}</span>
+          )}
+          {propertyCategoryLabel && (
+            <span className="text-neutral-400" aria-hidden="true">
+              -
+            </span>
+          )}
+          <span className="whitespace-nowrap">{property.location}</span>
         </CardTitle>
-        <CardDescription className="flex items-center gap-1">
-          <MapPin className="h-4 w-4 text-cyan-600" />
-          {property.location}
-        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4 flex-1 flex flex-col">
-        <div className="grid grid-cols-2 gap-4">
+        <div
+          className={`grid gap-4 ${
+            property.bedrooms != null ? "grid-cols-3" : "grid-cols-2"
+          }`}
+        >
           <div className="flex items-center gap-2">
             <Ruler className="h-4 w-4 text-cyan-600" />
             <div>
@@ -86,6 +100,15 @@ export function PropertyCard({
               <p className="font-semibold">{formatArea(property.area)} m²</p>
             </div>
           </div>
+          {property.bedrooms != null && (
+            <div className="flex items-center gap-2">
+              <Bed className="h-4 w-4 text-cyan-600" />
+              <div>
+                <p className="text-xs text-neutral-500">Quartos</p>
+                <p className="font-semibold">{property.bedrooms}</p>
+              </div>
+            </div>
+          )}
           <div className="flex items-center gap-2">
             <DollarSign className="h-4 w-4 text-cyan-600" />
             <div>

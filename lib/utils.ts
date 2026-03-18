@@ -15,3 +15,15 @@ export function formatCurrency(value: number): string {
 export function formatArea(area: number): string {
   return new Intl.NumberFormat("pt-BR").format(area);
 }
+
+export function getNeighborhoodFromLocation(location: string): string {
+  const raw = (location || "").trim();
+  if (!raw) {
+    return "Não informado";
+  }
+
+  const beforeComma = raw.split(",")[0]?.trim() || "";
+  const normalized = beforeComma.replace(/\s+/g, " ").trim();
+
+  return normalized || "Não informado";
+}

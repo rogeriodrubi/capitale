@@ -16,5 +16,7 @@ export interface Property {
   featured?: boolean;
   // Novos campos de filtro (tabelas Supabase)
   listing_type?: "venda" | "aluguel";
-  property_category?: "apartamento" | "casa";
+  // Em alguns ambientes o Supabase pode devolver valores normalizados (ex: "casa")
+  // ou capitalizados (ex: "Casa"). O frontend normaliza antes de exibir.
+  property_category?: "apartamento" | "casa" | "Apartamento" | "Casa";
 }
