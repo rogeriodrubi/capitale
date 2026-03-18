@@ -9,6 +9,9 @@ export function formatCurrency(value: number): string {
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
+    // Mostra preço como valor inteiro (sem parte decimal), evitando a vírgula ",00"
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
   }).format(value);
 }
 
