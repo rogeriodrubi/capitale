@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Property } from "@/lib/types";
 import { PropertyCard } from "@/components/sections/PropertyCard";
 import { PropertyModal } from "@/components/modals/PropertyModal";
-import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { getNeighborhoodFromLocation } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -15,16 +14,23 @@ interface PropertiesListProps {
 
 export function PropertiesList({ properties }: PropertiesListProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedNeighborhood, setSelectedNeighborhood] = useState("all");
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
   );
+
+  // Evita race entre "URL -> estado" e "estado -> URL" no mount:
+  // no commit inicial, o estado ainda está antigo enquanto os setState de "URL -> estado"
+  // ainda não re-renderizaram. Nesse caso, não devemos sobrescrever a querystring.
+  const pendingUrlSyncRef = useRef(false);
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const isPropriedadesRoute = pathname === "/propriedades";
+  // Garante sincronização de filtros com querystring quando estiver na rota de listagem.
+  // Evita quebra se houver trailing slash ou base path.
+  const isPropriedadesRoute = pathname?.includes("/propriedades") ?? false;
 
   const available = useMemo(
     () => properties.filter((p) => p.availability === true),
@@ -51,6 +57,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
 
         const neighborhood = getNeighborhoodFromLocation(p.location);
         const matchesNeighborhood =
+          selectedNeighborhood === "" ||
           selectedNeighborhood === "all" ||
           neighborhood === selectedNeighborhood;
 
@@ -60,25 +67,36 @@ export function PropertiesList({ properties }: PropertiesListProps) {
   );
 
   const qParam = searchParams.get("q") ?? "";
-  const bairroParam = searchParams.get("bairro") ?? "all";
+  const bairroParam = searchParams.get("bairro") ?? "";
   const imovelParam = searchParams.get("imovel") ?? "";
 
-  // Sync URL -> state (apenas em /propriedades)
+  // Sync URL -> state
   useEffect(() => {
     if (!isPropriedadesRoute) return;
 
     if (qParam !== searchTerm) {
+      pendingUrlSyncRef.current = true;
       setSearchTerm(qParam);
     }
-    if ((bairroParam || "all") !== selectedNeighborhood) {
-      setSelectedNeighborhood(bairroParam || "all");
+    if (bairroParam !== selectedNeighborhood) {
+      pendingUrlSyncRef.current = true;
+      setSelectedNeighborhood(bairroParam);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPropriedadesRoute, qParam, bairroParam]);
 
-  // Sync state -> URL (apenas em /propriedades)
+  // Sync state -> URL
   useEffect(() => {
     if (!isPropriedadesRoute) return;
+
+    if (pendingUrlSyncRef.current) {
+      // Se o estado já tiver refletido a querystring, liberamos o sync; caso contrário, pulamos.
+      if (qParam === searchTerm && bairroParam === selectedNeighborhood) {
+        pendingUrlSyncRef.current = false;
+      } else {
+        return;
+      }
+    }
 
     const params = new URLSearchParams(searchParams.toString());
 
@@ -86,10 +104,12 @@ export function PropertiesList({ properties }: PropertiesListProps) {
     if (nextQ) params.set("q", nextQ);
     else params.delete("q");
 
-    if (selectedNeighborhood && selectedNeighborhood !== "all") {
-      params.set("bairro", selectedNeighborhood);
-    } else {
+    if (selectedNeighborhood === "") {
       params.delete("bairro");
+    } else if (selectedNeighborhood === "all") {
+      params.set("bairro", "all");
+    } else {
+      params.set("bairro", selectedNeighborhood);
     }
 
     // não mexe em "imovel" aqui (controlado separadamente)
@@ -126,7 +146,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
     setImovelParam(null);
   };
 
-  // Sync URL (imovel) -> modal open/close (apenas em /propriedades)
+  // Sync URL (imovel) -> modal open/close
   useEffect(() => {
     if (!isPropriedadesRoute) return;
 
@@ -158,19 +178,21 @@ export function PropertiesList({ properties }: PropertiesListProps) {
 
         {/* Controles de filtro */}
         <div className="mb-4 w-full max-w-2xl mx-auto flex flex-col gap-3">
-          <Input
-            placeholder="Buscar por nome ou localização..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full border-neutral-200 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:border-cyan-500"
-          />
           <Select
             value={selectedNeighborhood}
-            onChange={(e) => setSelectedNeighborhood(e.target.value)}
+            onChange={(e) => {
+              // Mudança manual do usuário: libera o sync estado->URL.
+              pendingUrlSyncRef.current = false;
+              setSelectedNeighborhood(e.target.value);
+            }}
             className="w-full border-neutral-200 focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:border-cyan-500"
           >
+            <option value="" disabled hidden>
+              Selecione um bairro
+            </option>
             <option value="all">Todos os bairros</option>
-            {selectedNeighborhood !== "all" &&
+            {selectedNeighborhood !== "" &&
+              selectedNeighborhood !== "all" &&
               !neighborhoods.includes(selectedNeighborhood) && (
                 <option value={selectedNeighborhood}>
                   {selectedNeighborhood}
