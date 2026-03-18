@@ -5,12 +5,11 @@ import { Property } from "@/lib/types";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Ruler, DollarSign, Bed } from "lucide-react";
+import { Ruler, DollarSign, Bed } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatArea } from "@/lib/utils";
 

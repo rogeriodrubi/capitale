@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Hero } from "@/components/sections/Hero";
 import { PropertiesList } from "@/components/sections/PropertiesList";
 import { PropertiesMap } from "@/components/sections/PropertiesMap";
@@ -40,7 +41,9 @@ export default async function Home() {
         <Hero />
       </div>
       <div id="search">
-        <PropertiesList properties={properties} />
+        <Suspense fallback={<div>Carregando propriedades...</div>}>
+          <PropertiesList properties={properties} />
+        </Suspense>
       </div>
       <PropertiesMap properties={properties} />
       <FeaturedPropertiesCarousel />

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { PropertiesList } from "@/components/sections/PropertiesList";
 import { Footer } from "@/components/common/Footer";
 import { supabase, getPropertyCoverImage } from "@/lib/supabase";
@@ -31,7 +32,9 @@ export default async function PropriedadesPage() {
 
   return (
     <main>
-      <PropertiesList properties={properties} />
+      <Suspense fallback={<div>Carregando propriedades...</div>}>
+        <PropertiesList properties={properties} />
+      </Suspense>
       <Footer />
     </main>
   );
