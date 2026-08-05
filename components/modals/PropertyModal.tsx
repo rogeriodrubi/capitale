@@ -56,11 +56,11 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
       if (property.folder_id) {
         setIsLoadingImages(true);
         const allImages = await getPropertyImages(property.folder_id);
-        setImages(allImages.length > 0 ? allImages : [property.imageUrl || "/placeholder-property.jpg"].filter(Boolean));
+        setImages(allImages.length > 0 ? allImages : [property.imageUrl || "/images/skyscraper.jpg"].filter(Boolean));
         setIsLoadingImages(false);
       } else {
         // Fallback para imageUrl se não houver folder_id
-        setImages(property.imageUrl ? [property.imageUrl] : ["/placeholder-property.jpg"]);
+        setImages(property.imageUrl ? [property.imageUrl] : ["/images/skyscraper.jpg"]);
         setIsLoadingImages(false);
       }
     }

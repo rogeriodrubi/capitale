@@ -9,7 +9,6 @@ Router) com Supabase como backend de dados.
 - **Framework**: Next.js 15 (React 18, TypeScript 5)
 - **Estilo**: Tailwind CSS + shadcn/ui (componentes Radix)
 - **Ícones**: Lucide React
-- **Animações**: Framer Motion
 - **Dados**: Supabase (Postgres + Storage)
 - **Gerenciador de pacotes**: npm (`package-lock.json` é o lockfile do projeto)
 

@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Capitale - Imobiliária",
-  description: "Encontre os melhores terrenos e imóveis em São Paulo",
+  description: "Encontre os melhores terrenos e imóveis em Petrolina, PE",
 };
 
 export default function RootLayout({

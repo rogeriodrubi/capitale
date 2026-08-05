@@ -18,7 +18,6 @@ interface PropertiesListProps {
 const PAGE_SIZE = 12;
 
 export function PropertiesList({ properties }: PropertiesListProps) {
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
@@ -55,37 +54,28 @@ export function PropertiesList({ properties }: PropertiesListProps) {
     () =>
       available
         .filter((p) => {
-          const term = searchTerm.trim().toLowerCase();
-
-          const matchesSearch =
-            term.length === 0 ||
-            p.title.toLowerCase().includes(term) ||
-            p.location.toLowerCase().includes(term);
-
           const neighborhood = getNeighborhoodFromLocation(p.location);
-          const matchesNeighborhood =
+          return (
             selectedNeighborhood === "" ||
             selectedNeighborhood === "all" ||
-            neighborhood === selectedNeighborhood;
-
-          return matchesSearch && matchesNeighborhood;
+            neighborhood === selectedNeighborhood
+          );
         })
         // Imóveis marcados como destaque aparecem primeiro na listagem.
         .sort((a, b) => Number(!!b.featured) - Number(!!a.featured)),
-    [available, searchTerm, selectedNeighborhood],
+    [available, selectedNeighborhood],
   );
 
   // Volta para o primeiro lote sempre que os filtros mudam o conjunto de resultados.
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
-  }, [searchTerm, selectedNeighborhood]);
+  }, [selectedNeighborhood]);
 
   const visibleProperties = useMemo(
     () => filtered.slice(0, visibleCount),
     [filtered, visibleCount],
   );
 
-  const qParam = searchParams.get("q") ?? "";
   const bairroParam = searchParams.get("bairro") ?? "";
   const imovelParam = searchParams.get("imovel") ?? "";
 
@@ -93,16 +83,12 @@ export function PropertiesList({ properties }: PropertiesListProps) {
   useEffect(() => {
     if (!isPropriedadesRoute) return;
 
-    if (qParam !== searchTerm) {
-      pendingUrlSyncRef.current = true;
-      setSearchTerm(qParam);
-    }
     if (bairroParam !== selectedNeighborhood) {
       pendingUrlSyncRef.current = true;
       setSelectedNeighborhood(bairroParam);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPropriedadesRoute, qParam, bairroParam]);
+  }, [isPropriedadesRoute, bairroParam]);
 
   // Sync state -> URL
   useEffect(() => {
@@ -110,7 +96,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
 
     if (pendingUrlSyncRef.current) {
       // Se o estado já tiver refletido a querystring, liberamos o sync; caso contrário, pulamos.
-      if (qParam === searchTerm && bairroParam === selectedNeighborhood) {
+      if (bairroParam === selectedNeighborhood) {
         pendingUrlSyncRef.current = false;
       } else {
         return;
@@ -118,10 +104,6 @@ export function PropertiesList({ properties }: PropertiesListProps) {
     }
 
     const params = new URLSearchParams(searchParams.toString());
-
-    const nextQ = searchTerm.trim();
-    if (nextQ) params.set("q", nextQ);
-    else params.delete("q");
 
     if (selectedNeighborhood === "") {
       params.delete("bairro");
@@ -141,7 +123,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
       router.replace(href, { scroll: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPropriedadesRoute, pathname, router, searchTerm, selectedNeighborhood]);
+  }, [isPropriedadesRoute, pathname, router, selectedNeighborhood]);
 
   const setImovelParam = (propertyId: string | null) => {
     if (!isPropriedadesRoute) return;
