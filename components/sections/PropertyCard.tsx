@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Ruler, DollarSign, Bed } from "lucide-react";
+import { Ruler, DollarSign, Bed, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatArea } from "@/lib/utils";
 
@@ -67,6 +67,14 @@ export function PropertyCard({
             </Badge>
           </div>
         )}
+        {property.featured && (
+          <div
+            className="absolute top-3 left-3 bg-white/85 backdrop-blur-sm rounded-full p-1.5 shadow-sm"
+            title="Imóvel em destaque"
+          >
+            <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
+          </div>
+        )}
         {!property.availability && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <span className="text-white font-semibold text-lg">
@@ -115,7 +123,9 @@ export function PropertyCard({
           <div className="flex items-center gap-2">
             <DollarSign className="h-4 w-4 text-cyan-600" />
             <div>
-              <p className="text-xs text-neutral-500">Preço</p>
+              <p className="text-xs text-neutral-500">
+                {property.listing_type === "aluguel" ? "Aluguel" : "Preço"}
+              </p>
               <p className="font-semibold text-cyan-700">
                 {formatCurrency(property.price)}
               </p>

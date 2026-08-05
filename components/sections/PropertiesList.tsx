@@ -5,6 +5,7 @@ import { Property } from "@/lib/types";
 import { PropertyCard } from "@/components/sections/PropertyCard";
 import { PropertyModal } from "@/components/modals/PropertyModal";
 import { Select } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { getNeighborhoodFromLocation } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -12,12 +13,17 @@ interface PropertiesListProps {
   properties: Property[];
 }
 
+// Quantidade de cards exibidos por vez, para a tela não ficar longa demais
+// com muitos imóveis. "Carregar mais" revela o próximo lote.
+const PAGE_SIZE = 12;
+
 export function PropertiesList({ properties }: PropertiesListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(
     null
   );
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // Evita race entre "URL -> estado" e "estado -> URL" no mount:
   // no commit inicial, o estado ainda está antigo enquanto os setState de "URL -> estado"
@@ -47,23 +53,36 @@ export function PropertiesList({ properties }: PropertiesListProps) {
 
   const filtered = useMemo(
     () =>
-      available.filter((p) => {
-        const term = searchTerm.trim().toLowerCase();
+      available
+        .filter((p) => {
+          const term = searchTerm.trim().toLowerCase();
 
-        const matchesSearch =
-          term.length === 0 ||
-          p.title.toLowerCase().includes(term) ||
-          p.location.toLowerCase().includes(term);
+          const matchesSearch =
+            term.length === 0 ||
+            p.title.toLowerCase().includes(term) ||
+            p.location.toLowerCase().includes(term);
 
-        const neighborhood = getNeighborhoodFromLocation(p.location);
-        const matchesNeighborhood =
-          selectedNeighborhood === "" ||
-          selectedNeighborhood === "all" ||
-          neighborhood === selectedNeighborhood;
+          const neighborhood = getNeighborhoodFromLocation(p.location);
+          const matchesNeighborhood =
+            selectedNeighborhood === "" ||
+            selectedNeighborhood === "all" ||
+            neighborhood === selectedNeighborhood;
 
-        return matchesSearch && matchesNeighborhood;
-      }),
+          return matchesSearch && matchesNeighborhood;
+        })
+        // Imóveis marcados como destaque aparecem primeiro na listagem.
+        .sort((a, b) => Number(!!b.featured) - Number(!!a.featured)),
     [available, searchTerm, selectedNeighborhood],
+  );
+
+  // Volta para o primeiro lote sempre que os filtros mudam o conjunto de resultados.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [searchTerm, selectedNeighborhood]);
+
+  const visibleProperties = useMemo(
+    () => filtered.slice(0, visibleCount),
+    [filtered, visibleCount],
   );
 
   const qParam = searchParams.get("q") ?? "";
@@ -208,7 +227,7 @@ export function PropertiesList({ properties }: PropertiesListProps) {
 
         {/* Grid de propriedades */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((property) => (
+          {visibleProperties.map((property) => (
             <PropertyCard
               key={property.id}
               property={property}
@@ -217,6 +236,17 @@ export function PropertiesList({ properties }: PropertiesListProps) {
             />
           ))}
         </div>
+
+        {filtered.length > visibleCount && (
+          <div className="flex justify-center mt-8">
+            <Button
+              variant="outline"
+              onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
+            >
+              Carregar mais imóveis ({filtered.length - visibleCount} restantes)
+            </Button>
+          </div>
+        )}
 
         {selectedProperty && (
           <PropertyModal

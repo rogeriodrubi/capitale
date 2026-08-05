@@ -9,8 +9,9 @@ export interface Property {
   folder_id: string;
   availability: boolean | null;
   created_at: string | null;
-  // Campo opcional usado apenas no frontend, preenchido após buscar imagens no Storage
+  // imageUrl é preenchido no frontend (a partir de "images" ou do Storage) e não existe como coluna
   imageUrl?: string;
+  // Pode vir diretamente do banco (dados de mock/seed) ou, se vazio, ser buscado no Storage via folder_id
   images?: string[];
   features?: string[];
   contact?: string;

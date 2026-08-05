@@ -43,9 +43,16 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
     return undefined;
   })();
 
-  // Carregar todas as imagens quando o modal abrir
+  // Carregar todas as imagens quando o modal abrir: usa "images" (já salvo no
+  // banco, ex: dados de seed) quando disponível, senão busca no Storage.
   useEffect(() => {
     async function loadImages() {
+      if (property.images?.length) {
+        setImages(property.images);
+        setIsLoadingImages(false);
+        return;
+      }
+
       if (property.folder_id) {
         setIsLoadingImages(true);
         const allImages = await getPropertyImages(property.folder_id);
@@ -58,7 +65,7 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
       }
     }
     loadImages();
-  }, [property.folder_id, property.imageUrl]);
+  }, [property.images, property.folder_id, property.imageUrl]);
 
   if (!property) return null;
 
@@ -179,7 +186,9 @@ export function PropertyModal({ property, onClose }: PropertyModalProps) {
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-cyan-600" />
               <div>
-                <p className="text-xs text-neutral-500">Preço</p>
+                <p className="text-xs text-neutral-500">
+                  {property.listing_type === "aluguel" ? "Aluguel" : "Preço"}
+                </p>
                 <p className="font-semibold text-cyan-700">
                   {formatCurrency(property.price)}
                 </p>

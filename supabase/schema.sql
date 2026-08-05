@@ -22,7 +22,10 @@ create table public.properties (
   property_category text, 
   
   -- Array de strings para as características (features)
-  features text[] default '{}'
+  features text[] default '{}',
+
+  -- URLs de imagens (usado para imóveis sem pasta no Storage, ex: dados de mock)
+  images text[] default '{}'
 );
 
 -- Habilitar RLS (Segurança)
