@@ -1,113 +1,122 @@
-# Capitale Real Estate Platform
+# Capitale
 
-Uma moderna plataforma imobiliária para explorar e investir em terrenos e imóveis de qualidade em São Paulo.
+Site imobiliário para Petrolina, PE — listagem de imóveis (venda/aluguel, casa/apartamento)
+com filtro por bairro, ficha de detalhes e contato via WhatsApp. Construído em Next.js 15 (App
+Router) com Supabase como backend de dados.
 
-## 🚀 Features
+## Stack
 
-- ✨ Interface moderna com Tailwind CSS e shadcn/ui
-- 🗺️ Mapa interativo de terrenos com detalhes clicáveis
-- 📱 Design totalmente responsivo
-- 🎨 Tema Cyan e design profissional
-- 📧 Formulário de contato funcional
-- 🖼️ Galeria de imagens com carrossel
-- 📊 Seção sobre a empresa com estatísticas
-- 🔍 Busca e filtros de propriedades
+- **Framework**: Next.js 15 (React 18, TypeScript 5)
+- **Estilo**: Tailwind CSS + shadcn/ui (componentes Radix)
+- **Ícones**: Lucide React
+- **Animações**: Framer Motion
+- **Dados**: Supabase (Postgres + Storage)
+- **Gerenciador de pacotes**: npm (`package-lock.json` é o lockfile do projeto)
 
-## 📋 Requisitos
+## Pré-requisitos
 
-- Node.js 18+
-- pnpm 8+
+- Node.js compatível com Next.js 15
+- npm
+- Um projeto Supabase (URL + chaves de API)
 
-## 🛠️ Instalação
+## Setup
 
 ```bash
-# Clonar o repositório
-git clone <repo-url>
-
-# Instalar dependências
-pnpm install
-
-# Iniciar servidor de desenvolvimento
-pnpm dev
+npm install
+cp .env.example .env.local
 ```
 
-O servidor estará disponível em [http://localhost:3000](http://localhost:3000)
+Preencha `.env.local`:
 
-## 📁 Estrutura de Pastas
+| Variável                        | Onde usar                          | Observação                                                                 |
+| -------------------------------- | ----------------------------------- | --------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`       | Cliente e servidor                  | URL do projeto Supabase                                                     |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`  | Cliente e servidor                  | Chave anônima (pública) do Supabase                                         |
+| `SUPABASE_SERVICE_ROLE_KEY`      | Só servidor (`app/api/seed`)        | Bypassa RLS; nunca prefixar com `NEXT_PUBLIC_`; necessária só para rodar o seed local |
+
+```bash
+npm run dev
+```
+
+Acesse [http://localhost:3000](http://localhost:3000).
+
+## Supabase
+
+`supabase/schema.sql` cria a tabela `public.properties` (com RLS habilitado e uma policy de
+leitura pública) e é a fonte de verdade do schema — rode esse arquivo no SQL Editor do seu
+projeto Supabase para provisionar o banco.
+
+Imagens de imóveis vêm de duas formas: um array `images` salvo direto na linha (usado pelos
+dados de seed), ou — quando ausente — buscadas no bucket de Storage a partir do `folder_id` do
+imóvel.
+
+### Popular dados de desenvolvimento
+
+Com o servidor local rodando e `SUPABASE_SERVICE_ROLE_KEY` configurada:
+
+```bash
+# via UI
+# abra http://localhost:3000/seed e clique no botão
+
+# ou via API diretamente
+curl -X POST http://localhost:3000/api/seed
+```
+
+Isso faz upsert (por `folder_id`) dos imóveis de exemplo em `lib/seed-data.ts` — preserva
+imóveis já cadastrados manualmente. **A rota é bloqueada quando `NODE_ENV=production`.**
+
+## Estrutura de pastas
 
 ```
 capitale/
-├── app/                    # Diretório da aplicação Next.js
-│   ├── layout.tsx         # Layout principal
-│   ├── page.tsx           # Homepage
-│   └── globals.css        # Estilos globais
-├── components/            # Componentes React
-│   ├── common/            # Componentes reutilizáveis
-│   ├── sections/          # Seções da página
-│   ├── modals/            # Modais e diálogos
-│   └── ui/                # Componentes UI base
-├── lib/                   # Utilitários e dados
-│   ├── data.ts           # Dados das propriedades
-│   └── utils.ts          # Funções utilitárias
-├── public/               # Arquivos estáticos
-├── features.json         # Definição de features para testes
-├── @PRD.md              # Product Requirements Document
-└── package.json         # Dependências do projeto
+├── app/
+│   ├── page.tsx                 # Homepage
+│   ├── propriedades/page.tsx    # Listagem completa com filtros via querystring
+│   ├── api/seed/route.ts        # Seed de dev (bloqueado em produção)
+│   └── seed/page.tsx            # UI de dev para disparar o seed
+├── components/
+│   ├── common/                  # Header, Footer
+│   ├── sections/                # Hero, PropertiesList, About, Contact
+│   ├── modals/                  # PropertyModal
+│   └── ui/                      # Componentes shadcn/ui (Button, Card, Dialog, etc.)
+├── lib/
+│   ├── properties.ts            # Busca de imóveis + resolução de imagem de capa
+│   ├── supabase.ts              # Cliente Supabase (anon key)
+│   ├── supabase-admin.ts        # Cliente Supabase (service role, só server-side)
+│   ├── seed-data.ts             # Dados de exemplo para o seed de dev
+│   ├── types.ts                 # Tipo Property
+│   └── utils.ts                 # Formatação de moeda/área, derivação de bairro
+├── supabase/schema.sql          # Schema da tabela properties
+└── .specify/, specs/            # Spec-driven development (ver abaixo)
 ```
 
-## 🎨 Design System
-
-- **Cores**: Tema Cyan (primário), Neutral (secundário)
-- **Tipografia**: Inter
-- **Componentes**: shadcn/ui com Radix UI
-- **Ícones**: Lucide React
-
-## 📦 Dependências Principais
-
-- `next` - Framework React
-- `react` & `react-dom` - Biblioteca React
-- `tailwindcss` - Utility-first CSS
-- `@radix-ui/*` - Componentes acessíveis
-- `lucide-react` - Biblioteca de ícones
-
-## 🚀 Scripts
+## Scripts
 
 ```bash
-# Desenvolvimento
-pnpm dev
-
-# Build para produção
-pnpm build
-
-# Iniciar servidor de produção
-pnpm start
-
-# Executar linter
-pnpm lint
+npm run dev      # servidor de desenvolvimento
+npm run build    # build de produção
+npm start        # inicia o build de produção
+npm run lint     # ESLint
 ```
 
-## 📝 Configuração
+Não há test runner configurado neste projeto ainda.
 
-### Environment Variables
+## Desenvolvimento orientado a spec
 
-Crie um arquivo `.env.local` na raiz do projeto:
+Este projeto usa o [Spec Kit](https://github.com/github/spec-kit) para especificar features
+novas antes de implementá-las:
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:3000
-```
+- `.specify/memory/constitution.md` — princípios e restrições do projeto.
+- `specs/000-baseline/spec.md` — o que o produto já faz hoje (referência, não uma spec a
+  implementar).
+- `.specify/memory/backlog.md` — lista triada do que ainda falta, ainda sem spec formal.
+- `specs/NNN-.../spec.md` — specs de features individuais, uma pasta numerada por feature.
 
-## 🧪 Testes
+Fluxo para uma feature nova: `/speckit-specify` → (`/speckit-clarify`) → `/speckit-plan` →
+(`/speckit-checklist`) → `/speckit-tasks` → (`/speckit-analyze`) → `/speckit-implement`.
 
-Execute os testes feature usando a especificação em `features.json`
+## Deploy
 
-## 📞 Contato
-
-Para informações sobre a Capitale:
-
-- Email: contato@capitale.com
-- Telefone: (11) 9999-9999
-- Localização: Avenida Paulista, São Paulo
-
-## 📄 Licença
-
-Todos os direitos reservados © 2026 Capitale
+Deploy em [Vercel](https://vercel.com). Configure as mesmas variáveis de ambiente do
+`.env.local` no projeto Vercel (exceto `SUPABASE_SERVICE_ROLE_KEY`, que não é necessária em
+produção já que o seed fica bloqueado).
