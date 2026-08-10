@@ -89,7 +89,7 @@ export function Contact() {
             <CardContent className="flex flex-row items-center justify-between gap-4 py-4">
               {/* Grupo da Esquerda */}
               <div className="flex flex-col">
-                <p className="text-neutral-600 font-medium">(11) 9999-9999</p>
+                <p className="text-neutral-600 font-medium">(87) 99938-9753</p>
                 <p className="text-sm text-neutral-500">Seg-Sex: 8h-18h</p>
               </div>
 
@@ -108,21 +108,6 @@ export function Contact() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-cyan-600" />
-                Email
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-neutral-600">contato@capitale.com</p>
-              <p className="text-sm text-neutral-500 mt-2">
-                Resposta em até 24h
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-cyan-600" />
                 Localização
               </CardTitle>
@@ -131,6 +116,21 @@ export function Contact() {
               <p className="text-neutral-600">Petrolina, PE</p>
               <p className="text-sm text-neutral-500 mt-2">
                 Rua dos Capitais, 1000
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-cyan-600" />
+                Email
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-neutral-600">contato@capitale.com</p>
+              <p className="text-sm text-neutral-500 mt-2">
+                Resposta em até 24h
               </p>
             </CardContent>
           </Card>
